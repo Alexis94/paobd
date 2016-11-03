@@ -23,6 +23,12 @@ CREATE TABLE ALBUM(
   annee INTEGER CONSTRAINT year_constraint CHECK (annee > 0 AND annee < 3000)
 );
 
+CREATE TABLE ALBUM_TITRE(
+  titreId VARCHAR(10) REFERENCES TITRE(id),
+  nomAlbum VARCHAR(25) REFERENCES ALBUM(nom),
+  PRIMARY KEY (titreId, nomAlbum)
+);
+
 CREATE TABLE ARTISTE(
   nom VARCHAR(15) PRIMARY KEY,
   nationalite VARCHAR(50)
