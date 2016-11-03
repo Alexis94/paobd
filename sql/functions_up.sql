@@ -1,3 +1,9 @@
+CREATE OR REPLACE FUNCTION raiseNotice(notice_message text) RETURNS VOID as $$
+BEGIN
+    RAISE NOTICE '%', notice_message;
+END;
+$$ language plpgsql;
+
 CREATE OR REPLACE FUNCTION artisteExists(nomArtiste VARCHAR(15)) RETURNS BOOL AS $$
   BEGIN
     IF (EXISTS(select 1 FROM ARTISTE A WHERE A.nom=nomArtiste)) THEN
@@ -11,6 +17,7 @@ $$ LANGUAGE 'plpgsql';
 CREATE OR REPLACE FUNCTION insertNewArtist() RETURNS TRIGGER as $$
   BEGIN
     IF (NOT artisteExists(NEW.nomArtiste)) THEN
+      RAISE NOTICE 'Artiste inexistant. Insertion de la nouvelle ligne dans la table Artiste';
       INSERT INTO ARTISTE VALUES (NEW.nomArtiste);
     END IF;
     RETURN NEW;
