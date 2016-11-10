@@ -1,0 +1,207 @@
+\documentclass[a4paper,10pt, french]{report}
+
+\usepackage{fancyhdr}
+
+% Utilisation de tous les packages nécéssaires
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}%           gestion des accents (source)
+\usepackage[T1]{fontenc}%              gestion des accents (PDF)
+\usepackage[francais]{babel}%          gestion du français
+\usepackage{textcomp}%                 caractères additionnels
+\usepackage{lmodern}%                  police de caractère
+\usepackage{geometry}%                 gestion des marges
+\usepackage{graphicx}%                 gestion des images
+\usepackage{array}%                    gestion améliorée des tableaux
+\usepackage{calc}%                     syntaxe naturelle pour les calculs
+\usepackage{amsmath}
+\usepackage{dsfont}
+\usepackage{color}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{listings} %Algorithmes
+\usepackage{listingsutf8}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\graphicspath{ {images/} }
+
+
+\hypersetup{
+colorlinks=true, %colorise les liens
+breaklinks=true, %permet le retour à la ligne dans les liens trop longs
+urlcolor= blue, %couleur des hyperliens
+linkcolor= black, %couleur des liens internes
+citecolor=blue,    %couleur des liens de citations
+}
+
+
+\definecolor{Comments}{rgb}{0.13,0.54,0.13}
+\definecolor{Strings}{rgb}{0,0.63,0}
+\definecolor{Keywords}{rgb}{0,0,1}
+\definecolor{Background}{rgb}{1,1,1}
+\definecolor{Variables}{rgb}{0.62, 0.12, 0.94}
+
+\tolerance=1000
+
+\title{PAO: Développement d'une bibliothèque musicale}
+\author{Alexis \bsc{Durieux}}
+\date{ASI4 - 2016}
+
+\pagestyle{fancy}
+\fancyhead[R]{}
+\fancyhead[L]{\includegraphics[scale=0.35]{insa-logo.png}}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter*{Introduction}
+
+\chapter{Modèle entité-attribut et relationnel}
+\section{Modélisation entité-attribut}
+  \includegraphics[scale=0.5]{ea-final.png}
+\section{Modélisation de la vue}
+  \includegraphics[scale=0.5]{vues.png}
+\section{Du modèle entité-attribut vers le modèle relationnel}
+  \subsection{Tables}
+    \begin{itemize}
+      \item Utilisateur(\underline{pseudo}, motDePasse, nom, prenom, age) \newline
+        La table \emph{Utilisateur} référence les utilisateurs. On choisit comme \textbf{clé primaire} un \emph{pseudo} en raison des homonymes possibles entre utilisateurs.
+      \item Titre(\underline{id}, nom, duree, nomArtiste, nomAlbum) \newline
+        La table \emph{Titre} référence les titres. On choisit un \textbf{id} \textbf{clé primaire} en raison des homonymies possibles entre \textbf{plusieurs} titres. On a également un \emph{nomArtiste} et un \emph{nomAlbum} afin de représenter la cardinalité. En effet on suppose qu'un titre n'appartient au plus qu'à un seul album et qu'il est composé par un seul artiste. Le \emph{genre} quand à lui est un attribut issu d'une énumération définissant une liste de genre de musique.
+       \item Album(\underline{nom}, nomArtiste, annee) \newline
+        La table \emph{Album} référence les albums. On suppose dans notre cas que deux albums ne peuvent avoir le même nom. On peut donc choisir \textbf{nom} comme \textbf{clé primaire}. La clé étrangère \emph{nomArtiste} représente le fait qu'un album est composé par un seul artiste.
+      \item Artiste(\underline{nom}, nationalite) \newline
+        La table \emph{Artiste} référence les \emph{artistes}. Ici on a choisit comme \textbf{clé primaire} le \emph{nom} car on suppose que deux artistes ne peuvent pas avoir le même nom.
+      \item ListeTitre(\underline{pseudoUser}, \underline{titreId}) \newline
+        La table \emph{ListeTitre} correspond aux titres enregistrés par un utilisateur dans sa bibliothèque. On associe un utilisateur à un titre. La \textbf{clé primaire}: est \textbf{(pseudoUser, titreId)} car un utilisateur ne peut enregistrer deux titres identiques dans sa bibliothèque. En revanche un titre peut être enregistré dans la bibliothèque respective de \textbf{plusieurs} utilisateurs.
+      \item ListeAlbum(\underline{pseudoUser}, \underline{nomAlbum}) \newline
+        La table \emph{ListeAlbum} correspond aux albums enregistrés par un utilisateur dans sa bibliothèque. On associe un utilisateur à un titre. La \textbf{clé primaire}: est \textbf{(pseudoUser, nomAlbum)} car un utilisateur ne peut enregistrer deux albums identiques dans sa bibliothèque. En revanche un album peut être enregistré dans la bibliothèque respective de \textbf{plusieurs} utilisateurs.
+      \item ListeArtiste(\underline{pseudoUser}, \underline{nomArtiste}) \newline
+        La table \emph{ListeArtiste} correspond aux artistes enregistrés par un utilisateur dans sa bibliothèque. On associe un \textbf{utilisateur} à un \textbf{titre}. La \textbf{clé primaire}: est \textbf{(pseudoUser, nomArtiste)} car un utilisateur ne peut enregistrer deux artistes identiques dans sa bibliothèque. En revanche un artiste peut être enregistré dans la bibliothèque respective de \textbf{plusieurs} utilisateurs.
+      \item Ecoute(\underline{pseudoUser}, \underline{date}, idTitre) \newline
+        La table \emph{Ecoute} correspond à une liste d'écoute. À un instant \emph{t}, un utilisateur écoute un titre. On les associe donc dans la table. On choisit comme \textbf{clé primaire}: \textbf{(pseudoUser, date)}. En effet, un utilisateur ne peut écouter deux musiques en même temps.
+      \item Playlist(\underline{id}, pseudoUser, nom) \newline
+        La table \emph{Playlist} référence les playlists des utilisateurs. La \textbf{clé primaire} est un \emph{id} car un utilisateur peut avoir \textbf{plusieurs} playlists.
+      \item PlaylistTitre(\underline{idTitre}, \underline{idPlaylist}) \newline
+        La table \emph{PlaylistTitre} référence les titres des playlists. La \textbf{clé primaire} est \textbf{(idTitre, idPlaylist)} car un titre peut être présent une seule fois dans une même \emph{playlist} mais être présent dans \textbf{plusieurs} playlists différentes.
+    \end{itemize}
+  \subsection{Vue}
+    \begin{itemize}
+       \item  La \textbf{vue} \emph{ArtisteMusique} aggrège un \emph{artiste} avec son \emph{nombre de titres} et \emph{nombre d'albums} calculés respectivement à partir des tables \emph{Titre} et \emph{Artiste}.
+    \end{itemize}
+
+\section{Contraintes d'intégrité et types}
+  \subsection{Définitions des types et tables}
+    \begin{itemize}
+      \item \underline{GENRE\_MUSIQUE - ÉNUMÉRATION}
+        \begin{itemize}
+          \item \textbf{pop, rock, jazz, blues, electronique, variété, rap}
+        \end{itemize}
+      \item \underline{Utilisateur}
+        \begin{itemize}
+          \item pseudo: \textbf{VARCHAR(15) PRIMARY KEY}
+          \item motDePasse: \textbf{VARCHAR(25) NOT NULL}
+          \item nom: \textbf{VARCHAR(15)}
+          \item prenom: \textbf{VARCHAR(15)}
+          \item age: \textbf{INTEGER} $\in ]0, 99[$
+        \end{itemize}
+      \item Titre
+        \begin{itemize}
+          \item id: \textbf{VARCHAR(10) PRIMARY KEY}
+          \item nom: \textbf{VARCHAR(50) NOT NULL}
+          \item duree: \textbf{INTEGER NOT NULL}
+          \item nomArtiste: \textbf{VARCHAR(25) FOREIGN KEY REFERENCES ARTISTE NOT NULL}
+          \item nomAlbum: \textbf{VARCHAR(25) FOREIGN KEY REFERENCES ALBUM}
+          \item genre: \textbf{GENRE\_MUSIQUE}
+        \end{itemize}
+      \item Album
+        \begin{itemize}
+          \item nom: \textbf{VARCHAR(25) PRIMARY KEY}
+          \item nomArtiste: \textbf{VARCHAR(25) NOT NULL}
+          \item annee: \textbf{INTEGER} $\in ]0, 3000[$
+        \end{itemize}
+      \item Artiste
+        \begin{itemize}
+          \item nom: \textbf{VARCHAR(25) PRIMARY KEY}
+          \item nationalite: \textbf{VARCHAR(50)}
+        \end{itemize}
+      \item ListeTitre
+        \begin{itemize}
+          \item pseudoUser: \textbf{VARCHAR(15) FOREIGN KEY REFERENCES UTILISATEUR}
+          \item titreId: \textbf{VARCHAR(10) FOREIGN KEY REFERENCES TITRE}
+          \item \textbf{PRIMARY KEY: (pseudoUser, titreId)}
+        \end{itemize}
+      \item ListeAlbum
+        \begin{itemize}
+          \item pseudoUser: \textbf{VARCHAR(15) FOREIGN KEY REFERENCES UTILISATEUR}
+          \item nomAlbum: \textbf{VARCHAR(25) FOREIGN KEY REFERENCES ALBUM}
+          \item \textbf{PRIMARY KEY: (pseudoUser, nomAlbum)}
+        \end{itemize}
+      \item ListeArtiste
+        \begin{itemize}
+          \item pseudoUser: \textbf{VARCHAR(15) FOREIGN KEY REFERENCES UTILISATEUR}
+          \item nomArtiste: \textbf{VARCHAR(25) FOREIGN KEY REFERENCES ARTISTE}
+          \item \textbf{PRIMARY KEY: (pseudoUser, nomArtiste)}
+        \end{itemize}
+      \item Ecoute
+        \begin{itemize}
+          \item pseudoUser: \textbf{VARCHAR(15) FOREIGN KEY REFERENCES UTILISATEUR}
+          \item dateEcoute: \textbf{TIMESTAMP DEFAULT CURRENT\_TIMESTAMP}
+          \item titreId: \textbf{VARCHAR(10) FOREIGN KEY REFERENCES TITRE}
+          \item \textbf{PRIMARY KEY: (pseudoUser, dateEcoute)}
+        \end{itemize}
+      \item Playlist
+        \begin{itemize}
+          \item id: \textbf{VARCHAR(10) PRIMARY KEY}
+          \item nom: \textbf{VARCHAR(25) NOT NULL}
+          \item pseudoUser: \textbf{VARCHAR(15) FOREIGN KEY REFERENCES UTILISATEUR}
+        \end{itemize}
+      \item PlaylistTitre
+        \begin{itemize}
+          \item titreId: \textbf{VARCHAR(10) FOREIGN KEY REFERENCES TITRE}
+          \item playlistId: \textbf{VARCHAR(10) FOREIGN KEY REFERENCES PLAYLIST}
+          \item \textbf{PRIMARY KEY: (titreId, playlistId)}
+        \end{itemize}
+      \end{itemize}
+  \subsection{Définitions des triggers (À trouver)}
+    \begin{itemize}
+      \item Insertion dans \textbf{ARTISTE\_TITRE} \newline
+        On décide qu'une insertion dans la table \textbf{ARTISTE\_TITRE} déclenche l'insertion de l'artiste correspondant à \emph{nomArtiste} dans la table \textbf{ARTISTE}.
+      \item Insertion dans \textbf{ARTISTE\_ALBUM} \newline
+        On décide qu'une insertion dans la table \textbf{ARTISTE\_ALBUM} déclenche l'insertion de l'artiste correspondant à \emph{nomArtiste} dans la table \textbf{ARTISTE}.
+    \end{itemize}
+
+\chapter{Développement d'une application JAVA}
+\section{Cahier des charges}
+  \subsection{Présentation du principe de l'application}
+    La bibliothèque musicale que l'on souhaite développer est une bibliothèque musicale inspirée des plateformes populaires existantes (Spotify, Deezer)...À Contrario de ces dernières, cette application ne permettra pas d'écouter directement des titres mais permettra néanmoins d'enregistrer les écoutes récentes. Néanmoins, cette application permettra à l'utilisateur de classifier sa musique, de la trier et potentiellement dans un dernier de se voir recommander des musiques.
+  \subsection{Cas d'utilisations et fonctionnalités}
+    Les spécifications que nous allons lister ci-après sont l'ensemble des fonctionnalités permisent à l'utilisateur de l'application:
+    \begin{itemize}
+      \item Un utilisateur peut créer un compte auquel il pourra se connecter à l'aide d'un pseudonyme et d'un mot de passe.
+      \item La connexion au compte est nécessaire pour accéder à l'application. \newline
+        \textbf{Nous supposerons maintenant que l'utilisateur est connecté pour les fonctionnalités suivantes}
+      \item L'utilisateur peut importer des titres à partir d'un fichier \emph{csv} et les intégrer à la bibliothèque de l'application\footnote{Contenu accessible à l'ensemble des utilisateurs}.
+      \item L'utilisateur peut importer des artistes à partir d'un fichier \emph{csv} et les intégrer à la bibliothèque de l'application.
+      \item L'utilisateur peut importer des albums à partir d'un fichier \emph{csv} et les intégrer à la bibliothèque de l'application.
+      \item L'utilisateur peut ajouter manuellement des titres à la bibliothèque de l'application.
+      \item L'utilisateur peut ajouter manuellement des artistes à la bibliothèque de l'application.
+      \item L'utilisateur peut ajouter manuellement des albums à la bibliothèque de l'application.
+      \item L'utilisateur peut ajouter des titres à sa bibliothèque personnelle\footnote{Contenu visible seulement par l'utilisateur}.
+      \item L'utilisateur peut ajouter des artistes à sa bibliothèque personnelle.
+      \item L'utilisateur peut ajouter des albums à sa bibliothèque personnelle.
+      \item L'utilisateur peut créer des playlists à partir des titres de la bibliothèque de l'application.
+      \item L'utilisateur peut enregistrer ses écoutes récentes.
+      \item L'utilisateur peut rechercher des titres, artistes, albums et playlists.
+      \item L'utilisateur peut voir les playlists d'autres utilisateurs.
+    \end{itemize}
+
+
+\chapter*{Conclusion}
+
+
+\end{document}
