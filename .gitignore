@@ -1,0 +1,10 @@
+*.DS_Store
+
+# Tex out
+rapport/rapport.*
+!rapport/rapport.tex
+
+# Java
+app/*
+!app/src/
+

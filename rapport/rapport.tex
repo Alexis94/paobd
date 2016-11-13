@@ -199,8 +199,11 @@ citecolor=blue,    %couleur des liens de citations
       \item L'utilisateur peut rechercher des titres, artistes, albums et playlists.
       \item L'utilisateur peut voir les playlists d'autres utilisateurs.
     \end{itemize}
-
-
+  \subsection{Modèle DAO et Diagramme de classe}
+    Dans le cadre de ce projet nous utiliserons le \textbf{Design Pattern DAO (Data Access Object)}. Ce \textbf{Design pattern} permet de séparer l'accès aux bases de données à l'utilisation même de ces données au sein de l'application. Ainsi cela va consister dans notre cas à créer des classes correspondant aux entités que l'on compte manipuler dans notre application dans un premier temps. Seulement au lieu de faire ces classes manipuler directement la base de données, nous allons utiliser des classes \textbf{DAO} s'occupant de l'accès à la base de données pour l'entité correspondante. Par exemple \textbf{TitreDAO} va contenir les opérations relative à la classe \textbf{Titre} en base de données. On obtient donc lle diagramme de classe ci-dessous:
+    \includegraphics[scale=0.2]{class_diagram.png}
+  \subsection{JDBC}
+    Afin d'implémenter le design pattern \textbf{DAO}, nous allons utiliser \textbf{JDBC (Java Database Connectivity)}. JDBC est une \emph{API} pour JAVA permettant d'accéder à une base de donnée. Cette API fournit des méthodes pour se connecter à une base de données et effectuer des requêtes sur cette dernière depuis une application JAVA. L'utilisation de cette \emph{API} conjointement avec le design pattern \textbf{DAO} va se faire par l'intermédiaire d'une classe JAVA \textbf{DatabaseConnection} dont le rôle va être de créer une connexion à une base de donnée et d'implémenter les requêtes standard \textbf{select, update, insert, delete}. Cette classe va donc être une classe parente des implémentations des objets DAO.
 \chapter*{Conclusion}
 
 
