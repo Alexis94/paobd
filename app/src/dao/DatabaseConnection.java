@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.*;
+import java.util.HashMap;
 
 /**
  * Created by Alexis on 13/11/2016.
@@ -20,15 +21,15 @@ public class DatabaseConnection {
         try {
             System.out.println("Connection...");
             conn = DriverManager.getConnection(url);
+            stmt = conn.createStatement();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public static ResultSet query(String query) throws SQLException {
-        stmt = conn.createStatement();
         rs = stmt.executeQuery(query);
-
         //
         /*while (rs.next()) {
             String id = rs.getString("id");
@@ -56,4 +57,21 @@ public class DatabaseConnection {
         } catch (Exception ignored) {}
 
     }
+
+    public static ResultSet get(String values, String clauses, String table) throws SQLException {
+        return stmt.executeQuery("SELECT" + values + " FROM " + table + " WHERE " + clauses);
+    }
+
+    public static boolean insert(String values, String table) throws  SQLException {
+        return stmt.executeUpdate("INSERT INTO " + table + " VALUES (" + values + ")") > 0;
+    }
+
+    public static boolean delete(String table, String clauses) throws SQLException {
+        return stmt.executeUpdate("DELETE FROM " + table + " WHERE " + clauses) > 0;
+    }
+
+    public static boolean update(String table, String values, String clauses) throws SQLException {
+        return stmt.executeUpdate("UPDATE " + table + " SET " + values + " WHERE " + clauses) > 0;
+    }
+
 }

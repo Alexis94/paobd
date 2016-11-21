@@ -10,6 +10,7 @@ public class User {
     String pseudo;
     String nom;
     String prenom;
+    String password;
     int age;
     ArrayList<Titre> titres;
     ArrayList<Album> albums;
@@ -39,6 +40,10 @@ public class User {
 
     public String getPrenom() {
         return prenom;
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 
     public int getAge() {
@@ -75,6 +80,10 @@ public class User {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setAge(int age) {
