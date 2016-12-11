@@ -29,6 +29,13 @@ public class User {
         this.playlists = playlists;
         this.ecoutes = ecoutes;
     }
+    public User(){
+        this.titres = new ArrayList<Titre>();
+        this.albums = new ArrayList<Album>();
+        this.artistes = new ArrayList<Artiste>();
+        this.playlists = new ArrayList<Playlist>();
+        this.ecoutes = new ArrayList<Ecoute>();
+    }
 
     public String getPseudo() {
         return pseudo;
@@ -128,5 +135,10 @@ public class User {
 
     public void retirerPlaylist(Playlist playlist) {
         this.playlists.remove(playlist);
+    }
+
+    public void print(){
+        System.out.println("Pseudo -- Nom -- Prénom -- Age");
+        System.out.println(this.pseudo + " -- " + this.nom + " -- " + this.prenom + " -- " + this.age);
     }
 }

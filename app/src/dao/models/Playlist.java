@@ -23,6 +23,10 @@ public class Playlist {
         }
     }
 
+    public Playlist() {
+        this.titres = new ArrayList<Titre>();
+    }
+
     public String getId() {
         return id;
     }

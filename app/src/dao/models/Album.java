@@ -24,6 +24,15 @@ public class Album {
         }
     }
 
+    public Album() {
+        this.titres = new ArrayList<Titre>();
+    }
+
+    public Album(String nomAlbum) {
+        this.titres = new ArrayList<Titre>();
+        this.nom = nomAlbum;
+    }
+
     public String getNom() {
         return nom;
     }
@@ -64,7 +73,13 @@ public class Album {
         return duree;
     }
 
+    //TODO getFormattedDuree()
+
     public void setDuree(int duree) {
         this.duree = duree;
+    }
+
+    public void print() {
+        System.out.println(this.getNom() + " - " + this.getArtiste().getNom() + " - " + this.getDuree()/60 + ":" + this.getDuree()%60);
     }
 }

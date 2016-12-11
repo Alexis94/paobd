@@ -8,4 +8,5 @@ import dao.models.User;
 public interface UserDAO {
     public boolean ajouterUser(User user);
     public boolean supprimerUser(String pseudo);
+    public User seConnecter(String pseudo, String password);
 }

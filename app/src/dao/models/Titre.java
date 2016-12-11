@@ -20,6 +20,10 @@ public class Titre {
         this.album = album;
     }
 
+    public Titre() {
+
+    }
+
     public String getNom() {
         return nom;
     }
@@ -58,5 +62,9 @@ public class Titre {
 
     public void setAlbum(Album album) {
         this.album = album;
+    }
+
+    public void print(){
+        System.out.println(this.getNom() + " - " + this.getArtiste().getNom() + " - " + this.getAlbum().getNom() + " - " + this.getGenre() + " - " + this.getDuree() / 60 + ":" + this.getDuree()%60);
     }
 }

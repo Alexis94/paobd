@@ -8,14 +8,16 @@ import java.util.ArrayList;
 public class Artiste {
     String nom;
     String nationalite;
-    ArrayList<Titre> titres;
     ArrayList<Album> albums;
 
     public Artiste(String nom, String nationalite, ArrayList<Titre> titres, ArrayList<Album> albums) {
         this.nom = nom;
         this.nationalite = nationalite;
-        this.titres = titres;
         this.albums = albums;
+    }
+
+    public Artiste() {
+        this.albums = new ArrayList<Album>();
     }
 
     public String getNom() {
@@ -34,18 +36,6 @@ public class Artiste {
         this.nationalite = nationalite;
     }
 
-    public ArrayList<Titre> getTitres() {
-        return titres;
-    }
-
-    public void ajouterTitre(Titre titre) {
-        this.titres.add(titre);
-    }
-
-    public void retirer(Titre titre) {
-        this.titres.remove(titre);
-    }
-
     public ArrayList<Album> getAlbums() {
         return albums;
     }
@@ -56,5 +46,9 @@ public class Artiste {
 
     public void retirerAlbum(Album album) {
         this.albums.remove(album);
+    }
+
+    public void print() {
+        System.out.println(this.getNom() + " - " + this.getNationalite());
     }
 }
