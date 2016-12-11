@@ -40,6 +40,10 @@ public class Artiste {
         return albums;
     }
 
+    public void setAlbums(ArrayList<Album> albums) {
+        this.albums = albums;
+    }
+
     public void ajouterAlbum(Album album) {
         this.albums.add(album);
     }

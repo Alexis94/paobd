@@ -67,22 +67,41 @@ public class AlbumImpl implements AlbumDAO {
 
     public ArrayList<Album> getArtisteAlbums(String nomArtiste) {
         String clauses = "nomArtiste='" + nomArtiste + "';";
-        ArrayList<Album> albumsUser = new ArrayList<Album>();
+        ArrayList<Album> albumsArtiste = new ArrayList<Album>();
         try {
-            ResultSet rs = DatabaseConnection.get("*", "liste_album", clauses);
+            ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
             if (!rs.isBeforeFirst()){
-                return albumsUser;
+                return albumsArtiste;
             } else {
                 while (rs.next()){
-                    albumsUser.add(getAlbum(rs.getString("nomAlbum")));
+                    albumsArtiste.add(getAlbum(rs.getString("nom")));
                 }
-                return albumsUser;
+                return albumsArtiste;
             }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return albumsUser;
+            return albumsArtiste;
+        }
+    }
+
+    public ArrayList<Album> rechercherAlbums(String substring) {
+        String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "')) > 0;";
+        ArrayList<Album> resultatsRecherche = new ArrayList<>();
+        try {
+            ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
+            if (!rs.isBeforeFirst()){
+                return resultatsRecherche;
+            } else {
+                while (rs.next()){
+                    resultatsRecherche.add(getAlbum(rs.getString("nom")));
+                }
+                return resultatsRecherche;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return resultatsRecherche;
         }
     }
 }

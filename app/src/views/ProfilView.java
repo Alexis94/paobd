@@ -12,11 +12,12 @@ public class ProfilView {
         System.out.println("Salut " + user.getPseudo());
         System.out.println("1. Voir Titres");
         System.out.println("2. Voir Artistes");
-        System.out.println("3. Voir Albums\n");
+        System.out.println("3. Voir Albums");
+        System.out.println("4. Rechercher\n");
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3){
+        while(n != 1 && n != 2 && n != 3 && n != 4){
             n = in.nextInt();
         }
 
@@ -24,8 +25,10 @@ public class ProfilView {
             MainFrameController.showListeTitresView();
         } else if (n == 2) {
             MainFrameController.showListeArtistesView();
-        } else {
+        } else if (n == 3){
             MainFrameController.showListeAlbumsView(user);
+        } else {
+            MainFrameController.showRechercherView();
         }
 
     }

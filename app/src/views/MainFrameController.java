@@ -100,4 +100,9 @@ public class MainFrameController  {
         clearScreen();
         new ArtisteView(in, artiste);
     }
+
+    public static void showRechercherView() {
+        clearScreen();
+        new RechercherView(in);
+    }
 }

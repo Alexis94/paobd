@@ -26,7 +26,7 @@ public class ArtisteImpl implements ArtisteDAO {
                 while (rs.next()){
                     tmpArtiste.setNom(rs.getString("nom"));
                     tmpArtiste.setNationalite(rs.getString("nationalite"));
-                    tmpArtiste.setAlbums()
+                    tmpArtiste.setAlbums(new AlbumImpl().getArtisteAlbums(tmpArtiste.getNom()));
                 }
                 return tmpArtiste;
             }
@@ -38,7 +38,7 @@ public class ArtisteImpl implements ArtisteDAO {
 
     public ArrayList<Artiste> getUserArtistes(String pseudo) {
         String clauses = "pseudoUser='" + pseudo + "';";
-        ArrayList<Artiste> artistesUser = new ArrayList<Artiste>();
+        ArrayList<Artiste> artistesUser = new ArrayList<>();
         try {
             ResultSet rs = DatabaseConnection.get("*", "liste_artiste", clauses);
             if (!rs.isBeforeFirst()){
@@ -54,6 +54,26 @@ public class ArtisteImpl implements ArtisteDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return artistesUser;
+        }
+    }
+
+    public ArrayList<Artiste> rechercherArtistes(String substring) {
+        String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "')) > 0;";
+        ArrayList<Artiste> resultatsRecherche = new ArrayList<>();
+        try {
+            ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
+            if (!rs.isBeforeFirst()){
+                return resultatsRecherche;
+            } else {
+                while (rs.next()){
+                    resultatsRecherche.add(getArtiste(rs.getString("nom")));
+                }
+                return resultatsRecherche;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return resultatsRecherche;
         }
     }
 }

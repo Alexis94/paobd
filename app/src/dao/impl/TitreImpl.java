@@ -78,4 +78,24 @@ public class TitreImpl implements TitreDAO {
         }
 
     }
+
+    public ArrayList<Titre> rechercherTitre(String substring) {
+        String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "')) > 0;";
+        ArrayList<Titre> resultatsRecherche = new ArrayList<>();
+        try {
+            ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
+            if (!rs.isBeforeFirst()){
+                return resultatsRecherche;
+            } else {
+                while (rs.next()){
+                    resultatsRecherche.add(getTitre(rs.getString("id")));
+                }
+                return resultatsRecherche;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return resultatsRecherche;
+        }
+    }
 }
