@@ -87,7 +87,7 @@ public class AlbumImpl implements AlbumDAO {
     }
 
     public ArrayList<Album> rechercherAlbums(String substring) {
-        String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "')) > 0;";
+        String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "') > 0;";
         ArrayList<Album> resultatsRecherche = new ArrayList<>();
         try {
             ResultSet rs = DatabaseConnection.get("*", this.table, clauses);

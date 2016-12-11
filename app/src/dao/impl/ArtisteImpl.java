@@ -26,7 +26,7 @@ public class ArtisteImpl implements ArtisteDAO {
                 while (rs.next()){
                     tmpArtiste.setNom(rs.getString("nom"));
                     tmpArtiste.setNationalite(rs.getString("nationalite"));
-                    tmpArtiste.setAlbums(new AlbumImpl().getArtisteAlbums(tmpArtiste.getNom()));
+                    //tmpArtiste.setAlbums(new AlbumImpl().getArtisteAlbums(tmpArtiste.getNom()));
                 }
                 return tmpArtiste;
             }
@@ -58,7 +58,7 @@ public class ArtisteImpl implements ArtisteDAO {
     }
 
     public ArrayList<Artiste> rechercherArtistes(String substring) {
-        String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "')) > 0;";
+        String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "') > 0;";
         ArrayList<Artiste> resultatsRecherche = new ArrayList<>();
         try {
             ResultSet rs = DatabaseConnection.get("*", this.table, clauses);

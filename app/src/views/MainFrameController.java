@@ -2,10 +2,12 @@ package views;
 
 import dao.models.Album;
 import dao.models.Artiste;
+import dao.models.Titre;
 import dao.models.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -104,5 +106,20 @@ public class MainFrameController  {
     public static void showRechercherView() {
         clearScreen();
         new RechercherView(in);
+    }
+
+    public static void showListeTitresView(ArrayList<Titre> titres) {
+        clearScreen();
+        new ListeTitresView(in, titres);
+    }
+
+    public static void showListeAlbumsView(ArrayList<Album> albums) {
+        clearScreen();
+        new ListeAlbumsView(in, albums);
+    }
+
+    public static void showListeArtistesView(ArrayList<Artiste> artistes) {
+        clearScreen();
+        new ListeArtistesView(in, artistes);
     }
 }

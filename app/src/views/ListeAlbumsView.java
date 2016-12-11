@@ -4,6 +4,7 @@ import dao.impl.AlbumImpl;
 import dao.models.Album;
 import dao.models.User;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -32,4 +33,29 @@ public class ListeAlbumsView {
             MainFrameController.showProfil();
         }
     }
+
+    public ListeAlbumsView(Scanner in, ArrayList<Album> albums) {
+        for (Album album : albums) {
+            album.print();
+        }
+        System.out.println("\n1. Voir un album");
+        System.out.println("2. Retourner au profil");
+
+        int n = in.nextInt();
+
+        while(n != 1 && n != 2){
+            n = in.nextInt();
+        }
+
+        if (n == 1){
+            System.out.print("Nom de l'album: ");
+            String nomAlbum = in.nextLine();
+            nomAlbum = in.nextLine();
+            MainFrameController.showAlbumView(new AlbumImpl().getAlbum(nomAlbum));
+        } else {
+            MainFrameController.showProfil();
+        }
+    }
+
+    //TODO refactorer en ajoutant méthode pour regrouper deux constructeurs voir pareil pour chaque view (voir listeArtistesView)
 }

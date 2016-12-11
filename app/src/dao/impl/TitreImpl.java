@@ -79,8 +79,8 @@ public class TitreImpl implements TitreDAO {
 
     }
 
-    public ArrayList<Titre> rechercherTitre(String substring) {
-        String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "')) > 0;";
+    public ArrayList<Titre> rechercherTitres(String substring) {
+        String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "') > 0;";
         ArrayList<Titre> resultatsRecherche = new ArrayList<>();
         try {
             ResultSet rs = DatabaseConnection.get("*", this.table, clauses);

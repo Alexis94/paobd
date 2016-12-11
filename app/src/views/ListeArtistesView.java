@@ -5,6 +5,7 @@ import dao.impl.ArtisteImpl;
 import dao.models.Artiste;
 import dao.models.User;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -12,7 +13,15 @@ import java.util.Scanner;
  */
 public class ListeArtistesView {
     public ListeArtistesView(Scanner in, User user){
-        for (Artiste artiste : user.getArtistes()) {
+        afficherVue(in, user.getArtistes());
+    }
+
+    public ListeArtistesView(Scanner in, ArrayList<Artiste> artistes) {
+        afficherVue(in, artistes);
+    }
+
+    private void afficherVue(Scanner in, ArrayList<Artiste> artistes) {
+        for (Artiste artiste : artistes) {
             artiste.print();
         }
         System.out.println("\n1. Voir un artiste");
