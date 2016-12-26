@@ -1,5 +1,7 @@
 package dao.models;
 
+import dao.impl.TitreImpl;
+
 import java.util.ArrayList;
 
 /**
@@ -97,6 +99,7 @@ public class User {
         this.age = age;
     }
 
+
     public void ajouterTitre(Titre titre) {
         this.titres.add(titre);
     }
@@ -141,4 +144,13 @@ public class User {
         System.out.println("Pseudo -- Nom -- Prénom -- Age");
         System.out.println(this.pseudo + " -- " + this.nom + " -- " + this.prenom + " -- " + this.age);
     }
+
+    public void ajouterTitres(String[] titresIds) {
+        TitreImpl titreImpl = new TitreImpl();
+        for (String titreId : titresIds) {
+            titreImpl.ajouterTitreUser(getPseudo(), titreId);
+            this.ajouterTitre(titreImpl.getTitre(titreId));
+        }
+    }
 }
+

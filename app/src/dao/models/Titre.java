@@ -2,17 +2,21 @@ package dao.models;
 
 import utils.GenreMusique;
 
+import static utils.Utils.formatDuree;
+
 /**
  * Created by Alexis on 13/11/2016.
  */
 public class Titre {
+    int id;
     String nom;
     int duree;
     GenreMusique genre;
-    Artiste artiste;
-    Album album;
+    String artiste;
+    String album;
 
-    public Titre(String nom, int duree, GenreMusique genre, Artiste artiste, Album album) {
+    public Titre(int id, String nom, int duree, GenreMusique genre, String artiste, String album) {
+        this.id = id;
         this.nom = nom;
         this.duree = duree;
         this.genre = genre;
@@ -23,6 +27,7 @@ public class Titre {
     public Titre() {
 
     }
+
 
     public String getNom() {
         return nom;
@@ -48,23 +53,35 @@ public class Titre {
         this.genre = genre;
     }
 
-    public Artiste getArtiste() {
+    public String getArtiste() {
         return artiste;
     }
 
-    public void setArtiste(Artiste artiste) {
+    public void setArtiste(String artiste) {
         this.artiste = artiste;
     }
 
-    public Album getAlbum() {
+    public String getAlbum() {
         return album;
     }
 
-    public void setAlbum(Album album) {
+    public void setAlbum(String album) {
         this.album = album;
     }
 
     public void print(){
-        System.out.println(this.getNom() + " - " + this.getArtiste().getNom() + " - " + this.getAlbum().getNom() + " - " + this.getGenre() + " - " + this.getDuree() / 60 + ":" + this.getDuree()%60);
+        System.out.println(this.getNom() + " - " + this.getArtiste() + " - " + this.getAlbum() + " - " + this.getGenre() + " - " + formatDuree(this.getDuree()));
+    }
+
+    public void printWithId(){
+        System.out.println(this.getId() + " - " + this.getNom() + " - " + this.getArtiste() + " - " + this.getAlbum() + " - " + this.getGenre() + " - " + formatDuree(this.getDuree()));
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

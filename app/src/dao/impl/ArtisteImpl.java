@@ -2,10 +2,12 @@ package dao.impl;
 
 import dao.ArtisteDAO;
 import dao.DatabaseConnection;
+import dao.models.Album;
 import dao.models.Artiste;
 import dao.models.Titre;
 import utils.GenreMusique;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 public class ArtisteImpl implements ArtisteDAO {
     String table = "artiste";
     public Artiste getArtiste(String nomArtiste) {
+        nomArtiste = nomArtiste.replace("'", "''"); // Handling ' case
         String clauses = "nom='" + nomArtiste + "'";
         try {
             ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
@@ -26,9 +29,10 @@ public class ArtisteImpl implements ArtisteDAO {
                 while (rs.next()){
                     tmpArtiste.setNom(rs.getString("nom"));
                     tmpArtiste.setNationalite(rs.getString("nationalite"));
-                    //tmpArtiste.setAlbums(new AlbumImpl().getArtisteAlbums(tmpArtiste.getNom()));
+
                 }
                 return tmpArtiste;
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,6 +42,7 @@ public class ArtisteImpl implements ArtisteDAO {
 
     public ArrayList<Artiste> getUserArtistes(String pseudo) {
         String clauses = "pseudoUser='" + pseudo + "';";
+        Artiste artisteTmp = new Artiste();
         ArrayList<Artiste> artistesUser = new ArrayList<>();
         try {
             ResultSet rs = DatabaseConnection.get("*", "liste_artiste", clauses);
@@ -58,6 +63,7 @@ public class ArtisteImpl implements ArtisteDAO {
     }
 
     public ArrayList<Artiste> rechercherArtistes(String substring) {
+        substring = substring.replace("'", "''"); // Handling ' case
         String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "') > 0;";
         ArrayList<Artiste> resultatsRecherche = new ArrayList<>();
         try {
@@ -75,5 +81,27 @@ public class ArtisteImpl implements ArtisteDAO {
             e.printStackTrace();
             return resultatsRecherche;
         }
+    }
+
+    public boolean artisteExiste(String nomArtiste) {
+        String clauses = "nom='" + nomArtiste + "'";
+        try {
+            ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
+            return rs.isBeforeFirst();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean creerArtiste(String nomArtiste, String nationaliteArtiste) {
+        String values = "'" + nomArtiste + "'" + ", '" + nationaliteArtiste + "'";
+        try {
+            return DatabaseConnection.insert(values ,"artiste");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }

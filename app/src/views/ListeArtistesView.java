@@ -41,5 +41,8 @@ public class ListeArtistesView {
         } else {
             MainFrameController.showProfil();
         }
+
+        //TODO Ajouter Artiste directement collection
+
     }
 }

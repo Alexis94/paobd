@@ -51,44 +51,5 @@ public class SeConnecterView {
         System.out.println("User connecté");
         MainFrameController.setUser(user);
         MainFrameController.showProfil();
-
     }
-    /*public SeConnecterView(){
-        super();
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-        Box pseudoBox = Box.createHorizontalBox();
-        pseudoBox.setMaximumSize(new Dimension(400, 40));
-        JLabel pseudoLabel = new JLabel("Pseudo");
-        JTextField pseudoTextField = new JTextField("", 10);
-        pseudoBox.add(pseudoLabel);
-        pseudoBox.add(pseudoTextField);
-
-        Box passwordBox = Box.createHorizontalBox();
-        passwordBox.setMaximumSize(new Dimension(400, 40));
-        JLabel passwordLabel = new JLabel("Password");
-        JPasswordField passwordField = new JPasswordField("", 10);
-        passwordBox.add(passwordLabel);
-        passwordBox.add(passwordField);
-
-        this.add(pseudoBox);
-        this.add(passwordBox);
-
-        JButton seConnecterBtn = new JButton("Se Connecter");
-        seConnecterBtn.setMaximumSize(new Dimension(100, 40));
-        seConnecterBtn.setActionCommand("seConnecter");
-        seConnecterBtn.addActionListener(this);
-
-        this.add(seConnecterBtn);
-
-        this.setVisible(true);
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (Objects.equals(e.getActionCommand(), "seConnecter")){
-            System.out.println("User Connecté");
-        }
-    }*/
 }

@@ -1,5 +1,7 @@
 package dao.models;
 
+import dao.impl.AlbumImpl;
+
 import java.util.ArrayList;
 
 /**
@@ -8,17 +10,16 @@ import java.util.ArrayList;
 public class Artiste {
     String nom;
     String nationalite;
-    ArrayList<Album> albums;
 
     public Artiste(String nom, String nationalite, ArrayList<Titre> titres, ArrayList<Album> albums) {
         this.nom = nom;
         this.nationalite = nationalite;
-        this.albums = albums;
     }
 
     public Artiste() {
-        this.albums = new ArrayList<Album>();
+
     }
+
 
     public String getNom() {
         return nom;
@@ -37,19 +38,7 @@ public class Artiste {
     }
 
     public ArrayList<Album> getAlbums() {
-        return albums;
-    }
-
-    public void setAlbums(ArrayList<Album> albums) {
-        this.albums = albums;
-    }
-
-    public void ajouterAlbum(Album album) {
-        this.albums.add(album);
-    }
-
-    public void retirerAlbum(Album album) {
-        this.albums.remove(album);
+        return new AlbumImpl().getArtisteAlbums(this.getNom());
     }
 
     public void print() {

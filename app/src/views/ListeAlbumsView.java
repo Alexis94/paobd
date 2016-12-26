@@ -55,6 +55,7 @@ public class ListeAlbumsView {
         } else {
             MainFrameController.showProfil();
         }
+        //TODO Ajouter album collection
     }
 
     //TODO refactorer en ajoutant méthode pour regrouper deux constructeurs voir pareil pour chaque view (voir listeArtistesView)

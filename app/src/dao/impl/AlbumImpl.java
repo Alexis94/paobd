@@ -39,23 +39,24 @@ public class AlbumImpl implements AlbumDAO {
     }
 
     public Album getAlbum(String nomAlbum) {
-        String clauses = "nom='" + nomAlbum + "';";
-        Album tmpAlbum = new Album();
+        nomAlbum = nomAlbum.replace("'", "''"); // Handling ' case
+        String clauses = "nom='" + nomAlbum + "'";
         try {
             ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
             if (!rs.isBeforeFirst()){
                 return null;
             } else {
+                Album tmpAlbum = new Album();
                 while (rs.next()){
                     tmpAlbum.setNom(rs.getString("nom"));
                     tmpAlbum.setAnnee(rs.getInt("annee"));
-                    tmpAlbum.setArtiste(new ArtisteImpl().getArtiste(rs.getString("nomArtiste")));
+                    tmpAlbum.setArtiste(rs.getString("nomArtiste"));
                     int duree = 0;
-                    for (Titre titre : new TitreImpl().getAlbumTitres(rs.getString("nom"))) {
-                        tmpAlbum.ajouterTitre(titre);
+                    for (Titre titre : tmpAlbum.getTitres()) {
                         duree += titre.getDuree();
                     }
                     tmpAlbum.setDuree(duree);
+
                 }
                 return tmpAlbum;
             }
@@ -66,7 +67,8 @@ public class AlbumImpl implements AlbumDAO {
     }
 
     public ArrayList<Album> getArtisteAlbums(String nomArtiste) {
-        String clauses = "nomArtiste='" + nomArtiste + "';";
+        nomArtiste = nomArtiste.replace("'", "''"); // Handling ' case
+        String clauses = "nomArtiste='" + nomArtiste + "'";
         ArrayList<Album> albumsArtiste = new ArrayList<Album>();
         try {
             ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
@@ -87,6 +89,7 @@ public class AlbumImpl implements AlbumDAO {
     }
 
     public ArrayList<Album> rechercherAlbums(String substring) {
+        substring = substring.replace("'", "''"); // Handling ' case
         String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "') > 0;";
         ArrayList<Album> resultatsRecherche = new ArrayList<>();
         try {
@@ -102,6 +105,27 @@ public class AlbumImpl implements AlbumDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return resultatsRecherche;
+        }
+    }
+
+    public boolean albumExiste(String nomAlbum) {
+        String clauses = "nom='" + nomAlbum + "'";
+        try {
+            ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
+            return rs.isBeforeFirst();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean creerAlbum(String nomAlbum, String nomArtiste, int annee) {
+        String values = "'" + nomAlbum + "', '" + nomArtiste + "', " + annee;
+        try {
+            return DatabaseConnection.insert(values , this.table);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

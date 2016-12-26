@@ -11,6 +11,7 @@ import java.util.Scanner;
  */
 public class ArtisteView {
     public ArtisteView(Scanner in, Artiste artiste) {
+
         for (Album album : artiste.getAlbums()) {
             album.print();
         }

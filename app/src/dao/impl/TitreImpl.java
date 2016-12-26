@@ -37,6 +37,7 @@ public class TitreImpl implements TitreDAO {
     }
 
     public ArrayList<Titre> getAlbumTitres(String nomAlbum) {
+        nomAlbum = nomAlbum.replace("'", "''");
         String clauses = "nomAlbum='" + nomAlbum + "';";
         ArrayList<Titre> titresAlbum = new ArrayList<>();
         try {
@@ -56,7 +57,7 @@ public class TitreImpl implements TitreDAO {
     }
 
     public Titre getTitre(String titreId) {
-        String clauses = "id='" + titreId + "'";
+        String clauses = "id=" + titreId;
         try {
             ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
             if (!rs.isBeforeFirst()){
@@ -64,9 +65,10 @@ public class TitreImpl implements TitreDAO {
             } else {
                 Titre tmpTitre = new Titre();
                 while (rs.next()){
+                    tmpTitre.setId(rs.getInt("id"));
                     tmpTitre.setNom(rs.getString("nom"));
-                    tmpTitre.setAlbum(new Album(rs.getString("nomAlbum")));
-                    tmpTitre.setArtiste(new ArtisteImpl().getArtiste(rs.getString("nomArtiste")));
+                    tmpTitre.setAlbum(rs.getString("nomAlbum"));
+                    tmpTitre.setArtiste(rs.getString("nomArtiste"));
                     tmpTitre.setDuree(rs.getInt("duree"));
                     tmpTitre.setGenre(GenreMusique.valueOf(rs.getString("genre").toUpperCase()));
                 }
@@ -80,6 +82,7 @@ public class TitreImpl implements TitreDAO {
     }
 
     public ArrayList<Titre> rechercherTitres(String substring) {
+        substring = substring.replace("'", "''"); // Handling ' case
         String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "') > 0;";
         ArrayList<Titre> resultatsRecherche = new ArrayList<>();
         try {
@@ -96,6 +99,50 @@ public class TitreImpl implements TitreDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return resultatsRecherche;
+        }
+    }
+
+    public boolean retirerTitreUser(String pseudo, int titreId) {
+        String clauses = "pseudoUser='" + pseudo + "' AND titreId=" + titreId;
+        try {
+            return DatabaseConnection.delete("liste_titre", clauses);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean ajouterTitreUser(String pseudo, String titreId) {
+        String values = "'" + pseudo + "'" + ", '" + titreId + "'";
+        try {
+            return DatabaseConnection.insert(values ,"liste_titre");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean creerTitre(String nomTitre, int duree, String nomArtiste, String nomAlbum, String genre) {
+        String values = "DEFAULT, '" + nomTitre + "'" + ", " + duree + ", '" + nomArtiste + "', '" + nomAlbum + "', '" + genre.toLowerCase()     + "'";
+        try {
+            return DatabaseConnection.insert(values ,this.table);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int getDernierId() {
+        try {
+            ResultSet rs = DatabaseConnection.query("select currval('TITRE_SEQ')");
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 }

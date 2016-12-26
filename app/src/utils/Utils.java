@@ -1,7 +1,10 @@
 package utils;
 
+import com.sun.tools.javac.jvm.Gen;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Scanner;
 
 /**
  * Created by Alexis on 28/11/2016.
@@ -37,6 +40,10 @@ public class Utils {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+    public static String formatDuree(int duree) {
+        return duree/60 + ":" + duree%60;
     }
 
 }

@@ -25,28 +25,4 @@ public class WelcomeView {
             MainFrameController.showCreerCompteView();
         }
     }
-    /*public WelcomeView() {
-        JButton seConnecter = new JButton("Se Connecter");
-        JButton creerCompte = new JButton("Créer un compte");
-
-        seConnecter.setActionCommand("seConnecter");
-        creerCompte.setActionCommand("creerCompte");
-
-        this.add(seConnecter);
-        this.add(creerCompte);
-        this.setVisible(true);
-
-        seConnecter.addActionListener(this);
-        creerCompte.addActionListener(this);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (Objects.equals(e.getActionCommand(), "seConnecter")) {
-            MainFrameController.setView(new SeConnecterView());
-
-        } else if (Objects.equals(e.getActionCommand(), "creerCompte")) {
-            MainFrameController.setView(new CreerCompteView());
-        }
-    }*/
 }

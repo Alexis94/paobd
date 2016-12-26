@@ -15,7 +15,6 @@ import java.util.ArrayList;
  */
 public class PlaylistImpl implements PlaylistDAO {
     public ArrayList<Playlist> getUserPlaylists(String pseudo) {
-        Playlist playlistTmp = new Playlist();
         String clauses = "pseudoUser='" + pseudo + "';";
         ArrayList<Playlist> playlistsUser = new ArrayList<Playlist>();
         try {
@@ -24,17 +23,7 @@ public class PlaylistImpl implements PlaylistDAO {
                 return playlistsUser;
             } else {
                 while (rs.next()){
-                    playlistTmp.setNom(rs.getString("nom"));
-                    playlistTmp.setId(rs.getString("id"));
-                    playlistTmp.setPseudoUser(rs.getString("pseudoUser"));
-                    for (String titreId : getPlaylistTitresIds(playlistTmp.getId())) {
-                        playlistTmp.ajouterTitre(new TitreImpl().getTitre(titreId));
-                    }
-                    int duree = 0;
-                    for (Titre titre : playlistTmp.getTitres()) {
-                        duree += titre.getDuree();
-                    }
-                    playlistTmp.setDuree(duree);
+                    playlistsUser.add(getPlaylist(rs.getString("id")));
                 }
                 return playlistsUser;
             }
@@ -45,22 +34,49 @@ public class PlaylistImpl implements PlaylistDAO {
             return playlistsUser;
         }
     }
-    public ArrayList<String> getPlaylistTitresIds(String playlistId) {
+
+    public ArrayList<Titre> getPlaylistTitres(String playlistId) {
         String clauses = "playlistId='" + playlistId + "';";
-        ArrayList<String> playlistsTitresIds = new ArrayList<String>();
+        ArrayList<Titre> playlistTitres = new ArrayList<>();
         try {
             ResultSet rs = DatabaseConnection.get("*", "playlist_titre", clauses);
             if (!rs.isBeforeFirst()){
-                return playlistsTitresIds;
+                return playlistTitres;
             } else {
                 while (rs.next()){
-                    playlistsTitresIds.add(rs.getString("titreId"));
+                    playlistTitres.add(new TitreImpl().getTitre(rs.getString("titreId")));
                 }
-                return playlistsTitresIds;
+                return playlistTitres;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return playlistsTitresIds;
+            return playlistTitres;
+        }
+    }
+
+    public Playlist getPlaylist(String id) {
+        String clauses = "id='" + id + "';";
+        Playlist playlist = new Playlist();
+        try {
+            ResultSet rs = DatabaseConnection.get("*", "playlist", clauses);
+            if (!rs.isBeforeFirst()) {
+                return null;
+            } else {
+                while (rs.next()) {
+                    playlist.setId(rs.getString("id"));
+                    playlist.setNom(rs.getString("nom"));
+                    playlist.setPseudoUser("pseudoUser");
+                    int duree = 0;
+                    for (Titre titre : playlist.getTitres()) {
+                        duree += titre.getDuree();
+                    }
+                    playlist.setDuree(duree);
+                }
+                return playlist;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

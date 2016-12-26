@@ -1,6 +1,10 @@
 package dao.models;
 
+import dao.impl.TitreImpl;
+
 import java.util.ArrayList;
+
+import static utils.Utils.formatDuree;
 
 /**
  * Created by Alexis on 13/11/2016.
@@ -8,29 +12,23 @@ import java.util.ArrayList;
 public class Album {
     String nom;
     int annee;
-    Artiste artiste;
-    ArrayList<Titre> titres;
+    String artiste;
     int duree;
 
-    public Album(String nom, int annee, Artiste artiste, ArrayList<Titre> titres) {
+    public Album(String nom, int annee, String artiste) {
         this.nom = nom;
         this.annee = annee;
         this.artiste = artiste;
-        this.titres = titres;
         this.duree = 0;
 
-        for (Titre titre : this.titres){
-            this.duree += titre.getDuree();
-        }
+    }
+
+    public Album(String nom) {
+        this.nom = nom;
     }
 
     public Album() {
-        this.titres = new ArrayList<Titre>();
-    }
 
-    public Album(String nomAlbum) {
-        this.titres = new ArrayList<Titre>();
-        this.nom = nomAlbum;
     }
 
     public String getNom() {
@@ -49,37 +47,27 @@ public class Album {
         this.annee = annee;
     }
 
-    public Artiste getArtiste() {
+    public String getArtiste() {
         return artiste;
     }
 
-    public void setArtiste(Artiste artiste) {
+    public void setArtiste(String artiste) {
         this.artiste = artiste;
     }
 
     public ArrayList<Titre> getTitres() {
-        return titres;
-    }
-
-    public void ajouterTitre(Titre titre) {
-        this.titres.add(titre);
-    }
-
-    public void retirerTitre(Titre titre) {
-        this.titres.remove(titre);
+        return new TitreImpl().getAlbumTitres(this.nom);
     }
 
     public int getDuree() {
         return duree;
     }
 
-    //TODO getFormattedDuree()
-
     public void setDuree(int duree) {
         this.duree = duree;
     }
 
     public void print() {
-        System.out.println(this.getNom() + " - " + this.getArtiste().getNom() + " - " + this.getDuree()/60 + ":" + this.getDuree()%60);
+        System.out.println(this.getNom() + " - " + this.getArtiste() + " - " + formatDuree(this.getDuree()));
     }
 }

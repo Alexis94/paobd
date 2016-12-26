@@ -1,6 +1,10 @@
 package dao.models;
 
+import dao.impl.PlaylistImpl;
+
 import java.util.ArrayList;
+
+import static utils.Utils.formatDuree;
 
 /**
  * Created by Alexis on 13/11/2016.
@@ -8,24 +12,20 @@ import java.util.ArrayList;
 public class Playlist {
     String id;
     String nom;
-    ArrayList<Titre> titres;
     Integer duree;
     String pseudoUser;
 
     public Playlist(String id, String nom, ArrayList<Titre> titres, String pseudoUser) {
         this.id = id;
         this.nom = nom;
-        this.titres = titres;
         this.pseudoUser = pseudoUser;
         this.duree = 0;
-        for (Titre titre : this.titres) {
-            this.duree += titre.getDuree();
-        }
     }
 
     public Playlist() {
-        this.titres = new ArrayList<Titre>();
+
     }
+
 
     public String getId() {
         return id;
@@ -60,14 +60,12 @@ public class Playlist {
     }
 
     public ArrayList<Titre> getTitres(){
-        return titres;
+        return new PlaylistImpl().getPlaylistTitres(this.getId());
     }
 
-    public void ajouterTitre(Titre titre) {
-        this.titres.add(titre);
+
+    public void print() {
+        System.out.println(this.getId() + " - " + this.getNom() + " - " + formatDuree(this.getDuree()));
     }
 
-    public  void retirerTitre(Titre titre) {
-        this.titres.remove(titre);
-    }
 }

@@ -5,4 +5,4 @@ SELECT raiseNotice('Copy Data from albums.csv...');
 COPY ALBUM FROM '/Users/Alexis/Documents/INSA/PAO/projet/data/albums.csv' DELIMITER ',' CSV;
 
 SELECT raiseNotice('Copy Data from titres.csv...');
-COPY TITRE FROM '/Users/Alexis/Documents/INSA/PAO/projet/data/titres.csv' DELIMITER ',' CSV;
+COPY TITRE (nom, duree, nomArtiste, nomAlbum, genre) FROM '/Users/Alexis/Documents/INSA/PAO/projet/data/titres.csv' DELIMITER ',' CSV;

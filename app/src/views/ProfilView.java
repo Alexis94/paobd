@@ -13,11 +13,12 @@ public class ProfilView {
         System.out.println("1. Voir Titres");
         System.out.println("2. Voir Artistes");
         System.out.println("3. Voir Albums");
-        System.out.println("4. Rechercher\n");
+        System.out.println("4. Voir Playlists");
+        System.out.println("5. Rechercher\n");
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3 && n != 4){
+        while(n != 1 && n != 2 && n != 3 && n != 4 && n != 5){
             n = in.nextInt();
         }
 
@@ -27,9 +28,12 @@ public class ProfilView {
             MainFrameController.showListeArtistesView();
         } else if (n == 3){
             MainFrameController.showListeAlbumsView(user);
-        } else {
+        } else if (n == 4){
+            MainFrameController.showListePlaylistsView();
+        } else if (n == 5){
             MainFrameController.showRechercherView();
         }
 
+        //TODO Menu Écoute -- Ajouter/retirer écoute dedans
     }
 }

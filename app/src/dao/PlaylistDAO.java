@@ -1,6 +1,8 @@
 package dao;
 
 import dao.models.Playlist;
+import dao.models.Titre;
+
 import java.util.ArrayList;
 
 /**
@@ -8,5 +10,5 @@ import java.util.ArrayList;
  */
 public interface PlaylistDAO {
     ArrayList<Playlist> getUserPlaylists(String pseudo);
-    ArrayList<String> getPlaylistTitresIds(String playlistId);
+    ArrayList<Titre> getPlaylistTitres(String playlistId);
 }
