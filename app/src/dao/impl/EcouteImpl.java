@@ -3,6 +3,8 @@ package dao.impl;
 import dao.DatabaseConnection;
 import dao.EcouteDAO;
 import dao.models.Ecoute;
+import dao.models.Titre;
+import utils.GenreMusique;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -60,4 +62,29 @@ public class EcouteImpl implements EcouteDAO {
         }
     }
 
+    public ArrayList<Titre> getUserRecommendations(String pseudo) {
+        String requete = "select * from (select * from titre where id not in (select titreid as id from ecoute where pseudouser='" + pseudo + "')) as titre inner join (select genre, nomartiste from titre inner join (select titreId as id from ecoute where pseudouser='"+ pseudo +"') as titresecoutes on titre.id = titresecoutes.id) as res on titre.genre=res.genre OR titre.nomartiste=res.nomartiste ORDER BY RANDOM() limit 10;";
+        ArrayList<Titre> recommendationTitres = new ArrayList<>();
+        try {
+            ResultSet rs = DatabaseConnection.query(requete);
+            if (!rs.isBeforeFirst()){
+                return recommendationTitres;
+            } else {
+                while (rs.next()){
+                    Titre tmpTitre = new Titre();
+                    tmpTitre.setId(rs.getInt("id"));
+                    tmpTitre.setNom(rs.getString("nom"));
+                    tmpTitre.setAlbum(rs.getString("nomAlbum"));
+                    tmpTitre.setArtiste(rs.getString("nomArtiste"));
+                    tmpTitre.setDuree(rs.getInt("duree"));
+                    tmpTitre.setGenre(GenreMusique.valueOf(rs.getString("genre").toUpperCase()));
+                    recommendationTitres.add(tmpTitre);
+                }
+                return recommendationTitres;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -38,8 +38,5 @@ public class ProfilView {
             MainFrameController.showEcoutesView();
         }
 
-        //TODO Menu Écoute -- Ajouter/retirer écoute dedans -- + suggérer titre parmi non présent dans collection
-        //TODO Imoorter liste titre format csv dans liste_titre
-
     }
 }

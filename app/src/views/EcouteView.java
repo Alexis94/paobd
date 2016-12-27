@@ -49,8 +49,8 @@ public class EcouteView {
                 System.out.println("Echec lors de la suppression de l'écoute");
             }
             MainFrameController.showEcoutesView();
-        } else if (n == 4) {
-
+        } else if (n == 3) {
+            MainFrameController.showListeTitresView(new EcouteImpl().getUserRecommendations(user.getPseudo()));
         } else {
             MainFrameController.showProfil();
         }
