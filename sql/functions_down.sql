@@ -3,3 +3,5 @@
 -- DROP FUNCTION artisteExists(VARCHAR(15));
 -- DROP FUNCTION insertNewArtist();
 DROP FUNCTION raiseNotice(text);
+DROP FUNCTION cleanUpPlaylistTitre();
+DROP TRIGGER DELETE_IN_PLAYLIST_TITRE;
