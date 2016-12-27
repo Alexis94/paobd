@@ -10,5 +10,5 @@ import java.util.ArrayList;
  */
 public interface PlaylistDAO {
     ArrayList<Playlist> getUserPlaylists(String pseudo);
-    ArrayList<Titre> getPlaylistTitres(String playlistId);
+    ArrayList<Titre> getPlaylistTitres(int playlistId);
 }

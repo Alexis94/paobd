@@ -1,7 +1,9 @@
 package views;
 
+import dao.impl.PlaylistImpl;
 import dao.models.Playlist;
 import dao.models.Titre;
+import sun.applet.Main;
 
 import java.util.Scanner;
 
@@ -11,14 +13,41 @@ import java.util.Scanner;
 public class PlaylistView {
     public PlaylistView(Scanner in, Playlist playlist) {
         playlist.print();
+        int i = 0;
         for (Titre titre : playlist.getTitres()) {
+            System.out.print(++i + ". ");
             titre.print();
         }
 
-        System.out.print("Pressez entrez pour revenir au profil: ");
-        String entry = in.nextLine();
+        System.out.println("\n1. Ajouter titre à la playlist");
+        System.out.println("2. Retirer titre à la playlist");
+        System.out.println("3. Revenir à la liste des playlists");
+        System.out.println("4. Revenir au menu");
 
-        MainFrameController.showProfil();
+        int n = in.nextInt();
+
+        while(n != 1 && n != 2 && n != 3 && n != 4){
+            n = in.nextInt();
+        }
+
+        if (n == 1) {
+            MainFrameController.showAjouterTitreView(playlist.getId());
+        } else if (n == 2) {
+            System.out.print("ID du titre: ");
+            int titreId = in.nextInt();
+            if (playlist.supprimerTitre(playlist.getTitres().get(titreId - 1))) {
+                MainFrameController.showPlaylistView(playlist);
+            } else {
+                System.out.println("Erreur lors de la suppression du titre de la playlist");
+            }
+        } else if (n == 3) {
+            MainFrameController.showListePlaylistsView();
+        } else {
+            MainFrameController.showProfil();
+        }
+
+
+
         //TODO Ajouter titre à Playlist
         //TODO Retirer titre à Playlist
 

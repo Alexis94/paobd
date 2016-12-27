@@ -1,5 +1,6 @@
 package dao.models;
 
+import dao.impl.EcouteImpl;
 import dao.impl.TitreImpl;
 
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class User {
     }
 
     public ArrayList<Ecoute> getEcoutes() {
-        return ecoutes;
+        return new EcouteImpl().getUserEcoute(this.getPseudo());
     }
 
     public void setPseudo(String pseudo) {

@@ -62,6 +62,7 @@ public class CreerCompteView {
             System.out.println("Votre compte a été créé avec succès ! Connectez vous !");
             try {
                 Thread.sleep(5000);
+                MainFrameController.showWelcomeView();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -10,12 +10,12 @@ import static utils.Utils.formatDuree;
  * Created by Alexis on 13/11/2016.
  */
 public class Playlist {
-    String id;
+    int id;
     String nom;
     Integer duree;
     String pseudoUser;
 
-    public Playlist(String id, String nom, ArrayList<Titre> titres, String pseudoUser) {
+    public Playlist(int id, String nom, ArrayList<Titre> titres, String pseudoUser) {
         this.id = id;
         this.nom = nom;
         this.pseudoUser = pseudoUser;
@@ -27,11 +27,11 @@ public class Playlist {
     }
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -65,7 +65,17 @@ public class Playlist {
 
 
     public void print() {
-        System.out.println(this.getId() + " - " + this.getNom() + " - " + formatDuree(this.getDuree()));
+        System.out.println(this.getNom() + " - " + formatDuree(this.getDuree()));
+    }
+
+    public boolean ajouterTitre(Titre nouveauTitre) {
+        this.setDuree(this.getDuree() + nouveauTitre.getDuree());
+        return new PlaylistImpl().ajouterTitre(getId(), nouveauTitre.getId());
+    }
+
+    public boolean supprimerTitre(Titre titre) {
+        this.setDuree(this.getDuree() - titre.getDuree());
+        return new PlaylistImpl().retirerTitre(getId(), titre.getId());
     }
 
 }

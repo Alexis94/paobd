@@ -1,6 +1,9 @@
 package views;
 
+import dao.impl.EcouteImpl;
+import dao.impl.PlaylistImpl;
 import dao.impl.TitreImpl;
+import dao.models.Playlist;
 import dao.models.Titre;
 import dao.models.User;
 
@@ -21,16 +24,18 @@ public class ListeTitresView {
 
         System.out.println("1. Ajouter titre");
         System.out.println("2. Retirer titre");
-        System.out.println("3. Importer titres");
-        System.out.println("4. Retourner au profil");
+        System.out.println("3. Ajouter titre à une playlist");
+        System.out.println("4. Ajouter titre à la liste d'écoute");
+        System.out.println("5. Importer titres");
+        System.out.println("6. Retourner au profil");
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3 && n != 4){
+        while(n != 1 && n != 2 && n != 3 && n != 4 && n != 5 && n != 6){
             n = in.nextInt();
         }
 
         if (n == 1){
-            MainFrameController.showAjouterTitreView();
+            MainFrameController.showAjouterTitreView(0);
         } else if (n == 2){
             System.out.print("ID du titre: ");
             int titreId = in.nextInt();
@@ -40,9 +45,28 @@ public class ListeTitresView {
             } else {
                 System.out.println("Erreur lors de la suppression du titre de la bibliothèque personnelle");
             }
-        } else if (n == 3){
-            //TODO JFileChooser
+        } else if (n == 3) {
+            System.out.print("ID du titre: ");
+            int titreId = in.nextInt();
+            System.out.println("Playlists:");
+            int j = 0;
+            for (Playlist playlist : user.getPlaylists()) {
+                System.out.print(++j + ". ");
+                playlist.print();
+            }
+            System.out.print("Numéro de la playlist: ");
+            int numeroPlaylist = in.nextInt();
+            user.getPlaylists().get(numeroPlaylist - 1).ajouterTitre(new TitreImpl().getTitre(String.valueOf(titreId)));
+            MainFrameController.showPlaylistView(user.getPlaylists().get(numeroPlaylist - 1));
+
         } else if (n == 4) {
+            System.out.print("ID du titre: ");
+            int titreId = in.nextInt();
+            new EcouteImpl().ajouterEcoute(user.getPseudo(), user.getTitres().get(titreId - 1).getId());
+            MainFrameController.showEcoutesView();
+        } else if (n == 5) {
+            //TODO JFileChooser
+        } else  {
             MainFrameController.showProfil();
         }
 
@@ -50,15 +74,54 @@ public class ListeTitresView {
     }
 
     public ListeTitresView(Scanner in, ArrayList<Titre> titres) {
+        User user = MainFrameController.user;
         for (Titre titre : titres) {
             titre.printWithId();
         }
         //TODO Ajouter Titre directement collection
         //TODO Ajouter Titre à une playlist
-        System.out.print("Pressez entrez pour revenir au profil: ");
-        String entry = in.nextLine();
-        entry = in.nextLine();
+        System.out.println("\n1. Ajouter titre à la collection");
+        System.out.println("2. Ajouter titre à une Playlist");
+        System.out.println("3. Ajouter titre à la liste d'écoute");
+        System.out.println("4. Retourner au profil\n");
 
-        MainFrameController.showProfil();
+        int n = in.nextInt();
+
+        while(n != 1 && n != 2 && n != 3 && n != 4){
+            n = in.nextInt();
+        }
+
+        if (n == 1) {
+            System.out.print("ID du titre: ");
+            int titreId = in.nextInt();
+            if (new TitreImpl().retirerTitreUser(user.getPseudo(), user.getTitres().get(titreId - 1).getId())) {
+                user.retirerTitre(user.getTitres().get(titreId-1));
+                MainFrameController.showListeTitresView();
+            } else {
+                System.out.println("Erreur lors de la suppression du titre de la bibliothèque personnelle");
+            }
+        } else if (n == 2) {
+            System.out.print("ID du titre: ");
+            int titreId = in.nextInt();
+            System.out.println("Playlists:");
+            int j = 0;
+            for (Playlist playlist : user.getPlaylists()) {
+                System.out.print(++j + ". ");
+                playlist.print();
+            }
+            System.out.print("Numéro de la playlist: ");
+            int numeroPlaylist = in.nextInt();
+            user.getPlaylists().get(numeroPlaylist - 1).ajouterTitre(new TitreImpl().getTitre(String.valueOf(titreId)));
+            MainFrameController.showPlaylistView(user.getPlaylists().get(numeroPlaylist - 1));
+        } else if (n == 3) {
+            System.out.print("ID du titre: ");
+            int titreId = in.nextInt();
+            new EcouteImpl().ajouterEcoute(user.getPseudo(), titreId);
+            MainFrameController.showEcoutesView();
+        } else {
+            MainFrameController.showProfil();
+        }
+
+
     }
 }

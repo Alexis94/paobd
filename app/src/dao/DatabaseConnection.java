@@ -53,12 +53,13 @@ public class DatabaseConnection {
 
     public static boolean delete(String table, String clauses) throws SQLException {
         Statement stmt = conn.createStatement();
-        return stmt.executeUpdate("DELETE FROM " + table + " WHERE " + clauses) > 0;
+        String sql = "DELETE FROM " + table + " WHERE " + clauses + ";";
+        return stmt.executeUpdate(sql) > 0;
     }
 
     public static boolean update(String table, String values, String clauses) throws SQLException {
         Statement stmt = conn.createStatement();
-        return stmt.executeUpdate("UPDATE " + table + " SET " + values + " WHERE " + clauses) > 0;
+        return stmt.executeUpdate("UPDATE " + table + " SET " + values + " WHERE " + clauses + ";") > 0;
     }
 
 }

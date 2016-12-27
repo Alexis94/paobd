@@ -1,0 +1,1 @@
+select * from titre inner join (select genre, nomartiste from titre inner join (select titreId as id from ecoute where pseudouser='alexis') as titresecoutes on titre.id = titresecoutes.id) as res on titre.genre=res.genre OR titre.nomartiste=res.nomartiste offset floor(random()*(select count(*) from titre)) limit 10;

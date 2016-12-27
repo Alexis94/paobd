@@ -1,8 +1,14 @@
 CREATE TYPE GENRE_MUSIQUE AS ENUM(
-  'pop', 'rock', 'jazz', 'blues', 'electronique', 'variété', 'rap'
+  'pop', 'rock', 'jazz', 'blues', 'electronique', 'variete', 'rap', 'reggae'
 );
 
 CREATE SEQUENCE TITRE_SEQ
+    start 1
+    increment 1
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE SEQUENCE PLAYLIST_SEQ
     start 1
     increment 1
     NO MAXVALUE
@@ -62,13 +68,13 @@ CREATE TABLE ECOUTE(
 );
 
 CREATE TABLE PLAYLIST(
-  id VARCHAR(10) PRIMARY KEY,
+  id INTEGER PRIMARY KEY DEFAULT nextval('PLAYLIST_SEQ'),
   nom VARCHAR(25) NOT NULL,
   pseudoUser VARCHAR(15) REFERENCES UTILISATEUR(pseudo)
 );
 
 CREATE TABLE PLAYLIST_TITRE(
   titreId INTEGER REFERENCES TITRE(id),
-  playlistId VARCHAR(10) REFERENCES PLAYLIST(id),
+  playlistId INTEGER REFERENCES PLAYLIST(id),
   PRIMARY KEY (titreId, playlistId)
 );

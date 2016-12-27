@@ -130,8 +130,14 @@ public class MainFrameController  {
         new PlaylistView(in, playlist);
     }
 
-    public static void showAjouterTitreView() {
+    public static void showAjouterTitreView(int playlistId) {
         clearScreen();
-        new AjouterTitreView(in);
+        new AjouterTitreView(in, playlistId);
+    }
+
+    public static void showEcoutesView() {
+        clearScreen();
+        new EcouteView(in);
+
     }
 }

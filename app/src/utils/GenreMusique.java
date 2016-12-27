@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Created by Alexis on 13/11/2016.
  */
 public enum GenreMusique {
-    POP, ROCK, JAZZ, BLUES, ELECTRONIQUE, VARIETE, RAP;
+    POP, ROCK, JAZZ, BLUES, ELECTRONIQUE, VARIETE, RAP, REGGAE;
 
     public static void print() {
         System.out.println("1. POP");
@@ -16,6 +16,7 @@ public enum GenreMusique {
         System.out.println("5. ELECTRONIQUE");
         System.out.println("6. VARIETE");
         System.out.println("7. RAP");
+        System.out.println("8. REGGAE");
     }
 
     public static String get(int choix) {
@@ -34,6 +35,8 @@ public enum GenreMusique {
                 return "VARIETE";
             case 7:
                 return "RAP";
+            case 8:
+                return "REGGAE";
             default:
                 return "";
         }

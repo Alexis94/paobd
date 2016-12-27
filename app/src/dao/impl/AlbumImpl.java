@@ -128,4 +128,27 @@ public class AlbumImpl implements AlbumDAO {
             return false;
         }
     }
+
+    public boolean ajouterAlbumUser(String pseudo, String nomAlbum) {
+        nomAlbum = nomAlbum.replace("'", "''");
+        String values = "'" + pseudo + "'" + ", '" + nomAlbum + "'";
+        try {
+            return DatabaseConnection.insert(values ,"liste_album");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean retirerAlbumUser(String pseudo, String nomAlbum) {
+        nomAlbum = nomAlbum.replace("'", "''");
+        String clauses = "pseudoUser='" + pseudo + "' AND nomAlbum='" + nomAlbum + "'";
+        try {
+            return DatabaseConnection.delete("liste_album", clauses);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

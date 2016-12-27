@@ -104,4 +104,25 @@ public class ArtisteImpl implements ArtisteDAO {
         }
 
     }
+
+    public boolean ajouterArtisteUser(String pseudo, String nomArtiste) {
+        String values = "'" + pseudo + "'" + ", '" + nomArtiste + "'";
+        try {
+            return DatabaseConnection.insert(values ,"liste_artiste");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean retirerArtisteUser(String pseudo, String nomArtiste) {
+        nomArtiste = nomArtiste.replace("'", "''");
+        String clauses = "pseudoUser='" + pseudo + "' AND nomArtiste='" + nomArtiste + "'";
+        try {
+            return DatabaseConnection.delete("liste_artiste", clauses);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
