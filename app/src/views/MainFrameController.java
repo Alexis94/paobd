@@ -2,17 +2,16 @@ package views;
 
 import dao.models.*;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Created by Alexis on 21/11/2016.
  */
-public class MainFrameController  {
+public class MainFrameController {
     static User user;
     static Scanner in;
+
     /*static JFrame frame;
 
     public MainFrameController() {

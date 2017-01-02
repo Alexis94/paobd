@@ -24,7 +24,7 @@ public class ListePlaylistsView {
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3 && n != 4){
+        while (n != 1 && n != 2 && n != 3 && n != 4) {
             n = in.nextInt();
         }
 

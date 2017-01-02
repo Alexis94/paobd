@@ -1,13 +1,11 @@
 package dao.models;
 
-import java.util.Date;
-
 /**
  * Created by Alexis on 13/11/2016.
  */
 public class Ecoute {
-    String dateEcoute;
-    Titre Titre;
+    private String dateEcoute;
+    private Titre Titre;
 
     public Ecoute(String dateEcoute, Titre titre) {
         this.dateEcoute = dateEcoute;

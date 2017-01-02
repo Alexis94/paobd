@@ -8,15 +8,15 @@ import utils.Utils;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Created by Alexis on 13/11/2016.
  */
 public class UserImpl implements UserDAO {
     String table = "utilisateur";
+
     @Override
-    public boolean ajouterUser(User user){
+    public boolean ajouterUser(User user) {
 
         try {
             String values = "'" + user.getPseudo() + "', '" + Utils.hashPassword(user.getPassword()) + "', '" + user.getNom() + "', '" + user.getPrenom() + "', '" + Integer.toString(user.getAge()) + "'";
@@ -27,19 +27,15 @@ public class UserImpl implements UserDAO {
         }
     }
 
-    @Override
-    public boolean supprimerUser(String pseudo) {
-        return false;
-    }
 
     @Override
     public User seConnecter(String pseudo, String password) {
         try {
-            String clauses = "pseudo='"+pseudo + "' AND motDePasse='" + Utils.hashPassword(password) + "'";
+            String clauses = "pseudo='" + pseudo + "' AND motDePasse='" + Utils.hashPassword(password) + "'";
 
             ResultSet rs = DatabaseConnection.get(" * ", this.table, clauses);
             User user = new User();
-            if (!rs.isBeforeFirst() ) {
+            if (!rs.isBeforeFirst()) {
                 System.out.println("Wrong password and/or email");
                 return null;
             } else {

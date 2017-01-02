@@ -10,10 +10,10 @@ import static utils.Utils.formatDuree;
  * Created by Alexis on 13/11/2016.
  */
 public class Album {
-    String nom;
-    int annee;
-    String artiste;
-    int duree;
+    private String nom;
+    private int annee;
+    private String artiste;
+    private int duree;
 
     public Album(String nom, int annee, String artiste) {
         this.nom = nom;

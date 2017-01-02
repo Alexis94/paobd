@@ -1,7 +1,7 @@
-import java.sql.SQLException;
-
-import dao.*;
+import dao.DatabaseConnection;
 import views.MainFrameController;
+
+import java.sql.SQLException;
 
 /**
  * Created by Alexis on 16/11/2016.

@@ -1,7 +1,6 @@
 package views;
 
 import dao.impl.EcouteImpl;
-import dao.impl.PlaylistImpl;
 import dao.impl.TitreImpl;
 import dao.models.Playlist;
 import dao.models.Titre;
@@ -30,17 +29,17 @@ public class ListeTitresView {
         System.out.println("6. Retourner au profil");
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3 && n != 4 && n != 5 && n != 6){
+        while (n != 1 && n != 2 && n != 3 && n != 4 && n != 5 && n != 6) {
             n = in.nextInt();
         }
 
-        if (n == 1){
+        if (n == 1) {
             MainFrameController.showAjouterTitreView(0);
-        } else if (n == 2){
+        } else if (n == 2) {
             System.out.print("ID du titre: ");
             int titreId = in.nextInt();
             if (new TitreImpl().retirerTitreUser(user.getPseudo(), user.getTitres().get(titreId - 1).getId())) {
-                user.retirerTitre(user.getTitres().get(titreId-1));
+                user.retirerTitre(user.getTitres().get(titreId - 1));
                 MainFrameController.showListeTitresView();
             } else {
                 System.out.println("Erreur lors de la suppression du titre de la bibliothèque personnelle");
@@ -66,7 +65,7 @@ public class ListeTitresView {
             MainFrameController.showEcoutesView();
         } else if (n == 5) {
             //TODO JFileChooser
-        } else  {
+        } else {
             MainFrameController.showProfil();
         }
 
@@ -87,7 +86,7 @@ public class ListeTitresView {
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3 && n != 4){
+        while (n != 1 && n != 2 && n != 3 && n != 4) {
             n = in.nextInt();
         }
 
@@ -95,7 +94,7 @@ public class ListeTitresView {
             System.out.print("ID du titre: ");
             int titreId = in.nextInt();
             if (new TitreImpl().retirerTitreUser(user.getPseudo(), user.getTitres().get(titreId - 1).getId())) {
-                user.retirerTitre(user.getTitres().get(titreId-1));
+                user.retirerTitre(user.getTitres().get(titreId - 1));
                 MainFrameController.showListeTitresView();
             } else {
                 System.out.println("Erreur lors de la suppression du titre de la bibliothèque personnelle");

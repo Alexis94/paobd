@@ -3,7 +3,6 @@ package views;
 import dao.impl.EcouteImpl;
 import dao.models.Ecoute;
 import dao.models.User;
-import sun.applet.Main;
 
 import java.util.Scanner;
 
@@ -27,7 +26,7 @@ public class EcouteView {
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3 && n != 4){
+        while (n != 1 && n != 2 && n != 3 && n != 4) {
             n = in.nextInt();
         }
 
@@ -54,7 +53,6 @@ public class EcouteView {
         } else {
             MainFrameController.showProfil();
         }
-
 
 
     }

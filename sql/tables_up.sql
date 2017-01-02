@@ -33,11 +33,10 @@ CREATE TABLE ALBUM(
   annee INTEGER CONSTRAINT year_constraint CHECK (annee > 0 AND annee < 3000)
 );
 
-CREATE TABLE TITRE(
+CREATE TABLE TITRE( -- Voir necessité de nomArtiste après refactoring
   id INTEGER PRIMARY KEY DEFAULT nextval('TITRE_SEQ'),
   nom VARCHAR(50) NOT NULL,
   duree INTEGER NOT NULL,
-  nomArtiste VARCHAR(25) REFERENCES ARTISTE(nom) NOT NULL,
   nomAlbum VARCHAR(25) REFERENCES ALBUM(nom),
   genre GENRE_MUSIQUE
 );
@@ -49,7 +48,7 @@ CREATE TABLE LISTE_TITRE(
 );
 
 CREATE TABLE LISTE_ALBUM(
-  pseudoUser VARCHAR(10) REFERENCES UTILISATEUR(pseudo),
+  pseudoUser VARCHAR(15) REFERENCES UTILISATEUR(pseudo),
   nomAlbum VARCHAR(25) REFERENCES ALBUM(nom),
   PRIMARY KEY (pseudoUser, nomAlbum)
 );

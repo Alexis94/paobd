@@ -11,9 +11,9 @@ import java.util.Scanner;
  * Created by Alexis on 03/12/2016.
  */
 public class ListeAlbumsView {
-    public ListeAlbumsView(Scanner in, User user){
+    public ListeAlbumsView(Scanner in, User user) {
         int i = 0;
-        for (Album album : user.getAlbums()){
+        for (Album album : user.getAlbums()) {
             System.out.print(++i + ". ");
             album.print();
         }
@@ -24,7 +24,7 @@ public class ListeAlbumsView {
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3){
+        while (n != 1 && n != 2 && n != 3 && n != 4) {
             n = in.nextInt();
         }
 
@@ -44,8 +44,8 @@ public class ListeAlbumsView {
         } else if (n == 3) {
             System.out.print("Numéro de l'album: ");
             int numeroAlbum = in.nextInt();
-            if (new AlbumImpl().retirerAlbumUser(user.getPseudo(), user.getAlbums().get(numeroAlbum-1).getNom())) {
-                user.retirerAlbum(user.getAlbums().get(numeroAlbum-1));
+            if (new AlbumImpl().retirerAlbumUser(user.getPseudo(), user.getAlbums().get(numeroAlbum - 1).getNom())) {
+                user.retirerAlbum(user.getAlbums().get(numeroAlbum - 1));
                 MainFrameController.showListeAlbumsView(user);
             } else {
                 System.out.println("Erreur lors de la suppression de l'album de la bibliothèque personnelle");
@@ -65,7 +65,7 @@ public class ListeAlbumsView {
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3){
+        while (n != 1 && n != 2 && n != 3) {
             n = in.nextInt();
         }
 

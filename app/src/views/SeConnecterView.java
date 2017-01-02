@@ -6,7 +6,6 @@ import dao.models.User;
 import javax.swing.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.io.Console;
 import java.util.Scanner;
 
 /**

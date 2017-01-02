@@ -1,6 +1,5 @@
 package views;
 
-import dao.UserDAO;
 import dao.impl.UserImpl;
 import dao.models.User;
 

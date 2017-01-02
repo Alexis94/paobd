@@ -1,4 +1,4 @@
-\documentclass[a4paper,10pt, french]{report}
+\documentclass[a4paper,12pt, french]{report}
 
 \usepackage{fancyhdr}
 
@@ -48,7 +48,7 @@ citecolor=blue,    %couleur des liens de citations
 
 \title{PAO: Développement d'une bibliothèque musicale}
 \author{Alexis \bsc{Durieux}}
-\date{ASI4 - 2016}
+\date{ASI4 - 2017}
 
 \pagestyle{fancy}
 \fancyhead[R]{}
@@ -59,19 +59,22 @@ citecolor=blue,    %couleur des liens de citations
 \tableofcontents
 
 \chapter*{Introduction}
+L'objectif de ce PAO est la mise en application des concepts de bases de données par la mise en place d'une petite base de données et de son utilisation pour réaliser un ensemble de fonctionnalités. Dans notre cas, l'objectif est la création d'une bibliothèque musicale permettant à un utilisateur l'enregistrement de sa discographie. A ces fins nous allons réaliser une base de données. Pour concevoir cette dernière au mieux nous allons procéder par étapes. Dans un premier nous allons analyser les besoins de l'applications, puis nous allons réaliser le modèle entité-attribut avant de passer au modèle relationnel. Avec la base de données créée nous allons pouvoir réaliser une application java simple basée sur cette dernière. Nous implémenterons le pattern \textbf{DAO} afin de passer du \emph{modèle relationnel} à un \emph{modèle objet}. En terme de technologie, nous utiliserons une base de données \emph{Postgres} et \emph{JDBC} pour faire le liant avec l'application JAVA afin d'implémenter le pattern \textbf{DAO}
 
+\chapter{Analyse des besoins de l'application}
+Nous voulons donc créer une application permettant à l'utilisateur d'enregistrer ses musiques, artistes et albums afin de pouvoir les consulter. L'utilisateur utilise la bibliothèque de l'application pour ajouter ces derniers à sa  bibliothèque personnelle. Néanmoins l'utilisateur peut ajouter directement des musiques, albums et artistes à sa bibliothèque personnelle qui sont donc ajoutés à la bibliothèque de l'application. C'est donc une bibliothèque musicale collaborative que nous cherchons à créer où les données ajoutées par un utilisateur servent à tous les utilisateurs. On suppose également les relations suivantes. Un titre est contenu dans un album et un album est composé par un artiste. Ces relations sont primordiales à la bonne création de nos tables. En plus de vouloir stocker des titres, artistes et albums, on veut également stocker des informations propres à l'utilisateur. Enfin ce dernier doit être en mesure de stocker des écoutes et de créer et modifier des playlists. On suppose qu'une fois créé un titre ne peut être modifié ou supprimé de la bibliothèque de l'application. En effet une modification par un utilisateur engendrera sinon une modification potentielle dans la bibliothèque d'autres utilisateurs.
 \chapter{Modèle entité-attribut et relationnel}
 \section{Modélisation entité-attribut}
   \includegraphics[scale=0.5]{ea-final.png}
 \section{Modélisation de la vue}
   \includegraphics[scale=0.5]{vues.png}
 \section{Du modèle entité-attribut vers le modèle relationnel}
-  \subsection{Tables}
+  \subsection{Tables, clés primaires et cardinalité}
     \begin{itemize}
       \item Utilisateur(\underline{pseudo}, motDePasse, nom, prenom, age) \newline
         La table \emph{Utilisateur} référence les utilisateurs. On choisit comme \textbf{clé primaire} un \emph{pseudo} en raison des homonymes possibles entre utilisateurs.
-      \item Titre(\underline{id}, nom, duree, nomArtiste, nomAlbum) \newline
-        La table \emph{Titre} référence les titres. On choisit un \textbf{id} \textbf{clé primaire} en raison des homonymies possibles entre \textbf{plusieurs} titres. On a également un \emph{nomArtiste} et un \emph{nomAlbum} afin de représenter la cardinalité. En effet on suppose qu'un titre n'appartient au plus qu'à un seul album et qu'il est composé par un seul artiste. Le \emph{genre} quand à lui est un attribut issu d'une énumération définissant une liste de genre de musique.
+      \item Titre(\underline{id}, nom, duree, nomAlbum, genre) \newline
+        La table \emph{Titre} référence les titres. On choisit un \textbf{id} \textbf{clé primaire} en raison des homonymies possibles entre \textbf{plusieurs} titres. On a également un \emph{nomAlbum} afin de représenter la cardinalité. En effet on suppose qu'un titre n'appartient au plus qu'à un seul album. Le \emph{genre} quand à lui est un attribut issu d'une énumération définissant une liste de genre de musique.
        \item Album(\underline{nom}, nomArtiste, annee) \newline
         La table \emph{Album} référence les albums. On suppose dans notre cas que deux albums ne peuvent avoir le même nom. On peut donc choisir \textbf{nom} comme \textbf{clé primaire}. La clé étrangère \emph{nomArtiste} représente le fait qu'un album est composé par un seul artiste.
       \item Artiste(\underline{nom}, nationalite) \newline
@@ -85,7 +88,7 @@ citecolor=blue,    %couleur des liens de citations
       \item Ecoute(\underline{pseudoUser}, \underline{date}, idTitre) \newline
         La table \emph{Ecoute} correspond à une liste d'écoute. À un instant \emph{t}, un utilisateur écoute un titre. On les associe donc dans la table. On choisit comme \textbf{clé primaire}: \textbf{(pseudoUser, date)}. En effet, un utilisateur ne peut écouter deux musiques en même temps.
       \item Playlist(\underline{id}, pseudoUser, nom) \newline
-        La table \emph{Playlist} référence les playlists des utilisateurs. La \textbf{clé primaire} est un \emph{id} car un utilisateur peut avoir \textbf{plusieurs} playlists.
+        La table \emph{Playlist} référence les playlists des utilisateurs. La \textbf{clé primaire} est un \emph{id} car un utilisateur peut avoir \textbf{plusieurs} playlists. On ne peut également choisir le \emph{nom} car deux utilisateurs différents peuvent avoir une playlist ayant le même nom. En raison de la table \textbf{PlaylistTitre}, on utilise \textbf{id} comme clé primaire car clé étrangère de \textbf{PlaylistTitre}.
       \item PlaylistTitre(\underline{idTitre}, \underline{idPlaylist}) \newline
         La table \emph{PlaylistTitre} référence les titres des playlists. La \textbf{clé primaire} est \textbf{(idTitre, idPlaylist)} car un titre peut être présent une seule fois dans une même \emph{playlist} mais être présent dans \textbf{plusieurs} playlists différentes.
     \end{itemize}
@@ -99,29 +102,30 @@ citecolor=blue,    %couleur des liens de citations
     \begin{itemize}
       \item \underline{GENRE\_MUSIQUE - ÉNUMÉRATION}
         \begin{itemize}
-          \item \textbf{pop, rock, jazz, blues, electronique, variété, rap}
+          \item \textbf{pop, rock, jazz, blues, electronique, variété, rap, reggae}
         \end{itemize}
       \item \underline{Utilisateur}
         \begin{itemize}
           \item pseudo: \textbf{VARCHAR(15) PRIMARY KEY}
-          \item motDePasse: \textbf{VARCHAR(25) NOT NULL}
+          \item motDePasse: \textbf{VARCHAR(64) NOT NULL}
           \item nom: \textbf{VARCHAR(15)}
           \item prenom: \textbf{VARCHAR(15)}
           \item age: \textbf{INTEGER} $\in ]0, 99[$
         \end{itemize}
       \item Titre
         \begin{itemize}
-          \item id: \textbf{VARCHAR(10) PRIMARY KEY}
+          \item id: \textbf{INTEGER PRIMARY KEY}
           \item nom: \textbf{VARCHAR(50) NOT NULL}
           \item duree: \textbf{INTEGER NOT NULL}
           \item nomArtiste: \textbf{VARCHAR(25) FOREIGN KEY REFERENCES ARTISTE NOT NULL}
           \item nomAlbum: \textbf{VARCHAR(25) FOREIGN KEY REFERENCES ALBUM}
           \item genre: \textbf{GENRE\_MUSIQUE}
+          Il faut noter qu'on utilise une \textbf{séquence} de \textbf{INTEGER} pour définir la valeur de \textbf{id}
         \end{itemize}
       \item Album
         \begin{itemize}
           \item nom: \textbf{VARCHAR(25) PRIMARY KEY}
-          \item nomArtiste: \textbf{VARCHAR(25) NOT NULL}
+          \item nomArtiste: \textbf{VARCHAR(25) REFERENCES ARTISTE NOT NULL}
           \item annee: \textbf{INTEGER} $\in ]0, 3000[$
         \end{itemize}
       \item Artiste
@@ -132,7 +136,7 @@ citecolor=blue,    %couleur des liens de citations
       \item ListeTitre
         \begin{itemize}
           \item pseudoUser: \textbf{VARCHAR(15) FOREIGN KEY REFERENCES UTILISATEUR}
-          \item titreId: \textbf{VARCHAR(10) FOREIGN KEY REFERENCES TITRE}
+          \item titreId: \textbf{INTEGER FOREIGN KEY REFERENCES TITRE}
           \item \textbf{PRIMARY KEY: (pseudoUser, titreId)}
         \end{itemize}
       \item ListeAlbum
@@ -151,7 +155,7 @@ citecolor=blue,    %couleur des liens de citations
         \begin{itemize}
           \item pseudoUser: \textbf{VARCHAR(15) FOREIGN KEY REFERENCES UTILISATEUR}
           \item dateEcoute: \textbf{TIMESTAMP DEFAULT CURRENT\_TIMESTAMP}
-          \item titreId: \textbf{VARCHAR(10) FOREIGN KEY REFERENCES TITRE}
+          \item titreId: \textbf{INTEGER FOREIGN KEY REFERENCES TITRE}
           \item \textbf{PRIMARY KEY: (pseudoUser, dateEcoute)}
         \end{itemize}
       \item Playlist
@@ -159,20 +163,19 @@ citecolor=blue,    %couleur des liens de citations
           \item id: \textbf{VARCHAR(10) PRIMARY KEY}
           \item nom: \textbf{VARCHAR(25) NOT NULL}
           \item pseudoUser: \textbf{VARCHAR(15) FOREIGN KEY REFERENCES UTILISATEUR}
+          Il faut noter qu'on utilise une \textbf{séquence} de \textbf{INTEGER} pour définir la valeur de \textbf{id}
         \end{itemize}
       \item PlaylistTitre
         \begin{itemize}
-          \item titreId: \textbf{VARCHAR(10) FOREIGN KEY REFERENCES TITRE}
-          \item playlistId: \textbf{VARCHAR(10) FOREIGN KEY REFERENCES PLAYLIST}
+          \item titreId: \textbf{INTEGER FOREIGN KEY REFERENCES TITRE}
+          \item playlistId: \textbf{INTEGER FOREIGN KEY REFERENCES PLAYLIST}
           \item \textbf{PRIMARY KEY: (titreId, playlistId)}
         \end{itemize}
       \end{itemize}
-  \subsection{Définitions des triggers (À trouver)}
+  \subsection{Définitions des triggers }
     \begin{itemize}
-      \item Insertion dans \textbf{ARTISTE\_TITRE} \newline
-        On décide qu'une insertion dans la table \textbf{ARTISTE\_TITRE} déclenche l'insertion de l'artiste correspondant à \emph{nomArtiste} dans la table \textbf{ARTISTE}.
-      \item Insertion dans \textbf{ARTISTE\_ALBUM} \newline
-        On décide qu'une insertion dans la table \textbf{ARTISTE\_ALBUM} déclenche l'insertion de l'artiste correspondant à \emph{nomArtiste} dans la table \textbf{ARTISTE}.
+      \item Suppression dans \textbf{PLAYLIST} \newline
+        Une suppression d'une playlist dans la table \textbf{PLAYLIST}, engendre la suppression de toutes les références associées dans la table \textbf{'PLAYLIST\_TITRE'}.
     \end{itemize}
 
 \chapter{Développement d'une application JAVA}
@@ -185,9 +188,6 @@ citecolor=blue,    %couleur des liens de citations
       \item Un utilisateur peut créer un compte auquel il pourra se connecter à l'aide d'un pseudonyme et d'un mot de passe.
       \item La connexion au compte est nécessaire pour accéder à l'application. \newline
         \textbf{Nous supposerons maintenant que l'utilisateur est connecté pour les fonctionnalités suivantes}
-      \item L'utilisateur peut importer des titres à partir d'un fichier \emph{csv} et les intégrer à la bibliothèque de l'application\footnote{Contenu accessible à l'ensemble des utilisateurs}.
-      \item L'utilisateur peut importer des artistes à partir d'un fichier \emph{csv} et les intégrer à la bibliothèque de l'application.
-      \item L'utilisateur peut importer des albums à partir d'un fichier \emph{csv} et les intégrer à la bibliothèque de l'application.
       \item L'utilisateur peut ajouter manuellement des titres à la bibliothèque de l'application.
       \item L'utilisateur peut ajouter manuellement des artistes à la bibliothèque de l'application.
       \item L'utilisateur peut ajouter manuellement des albums à la bibliothèque de l'application.
@@ -196,11 +196,12 @@ citecolor=blue,    %couleur des liens de citations
       \item L'utilisateur peut ajouter des albums à sa bibliothèque personnelle.
       \item L'utilisateur peut créer des playlists à partir des titres de la bibliothèque de l'application.
       \item L'utilisateur peut enregistrer ses écoutes récentes.
-      \item L'utilisateur peut rechercher des titres, artistes, albums et playlists.
-      \item L'utilisateur peut voir les playlists d'autres utilisateurs.
+      \item L'utilisateur peut retirer des écoutes récentes.
+      \item L'utilisateur peut voir des recommandations basées sur ses écoutes récentes
+      \item L'utilisateur peut rechercher des titres, artistes, albums.
     \end{itemize}
   \subsection{Modèle DAO et Diagramme de classe}
-    Dans le cadre de ce projet nous utiliserons le \textbf{Design Pattern DAO (Data Access Object)}. Ce \textbf{Design pattern} permet de séparer l'accès aux bases de données à l'utilisation même de ces données au sein de l'application. Ainsi cela va consister dans notre cas à créer des classes correspondant aux entités que l'on compte manipuler dans notre application dans un premier temps. Seulement au lieu de faire ces classes manipuler directement la base de données, nous allons utiliser des classes \textbf{DAO} s'occupant de l'accès à la base de données pour l'entité correspondante. Par exemple \textbf{TitreDAO} va contenir les opérations relative à la classe \textbf{Titre} en base de données. On obtient donc lle diagramme de classe ci-dessous:
+    Dans le cadre de ce projet nous utiliserons le \textbf{Design Pattern DAO (Data Access Object)}. Ce \textbf{Design pattern} permet de séparer l'accès aux bases de données à l'utilisation même de ces données au sein de l'application. Ainsi cela va consister dans notre cas à créer des classes correspondant aux entités que l'on compte manipuler dans notre application dans un premier temps. Seulement au lieu de faire ces classes manipuler directement la base de données, nous allons utiliser des classes \textbf{DAO} s'occupant de l'accès à la base de données pour l'entité correspondante. Par exemple \textbf{TitreDAO} va contenir les opérations relative à la classe \textbf{Titre} en base de données. Ce pattern \textbf{DAO} nous permet de passer d'un \textbf{modèle relationnel à un modèle objet}. On obtient donc le diagramme de classe ci-dessous:
     \includegraphics[scale=0.2]{class_diagram.png}
   \subsection{JDBC}
     Afin d'implémenter le design pattern \textbf{DAO}, nous allons utiliser \textbf{JDBC (Java Database Connectivity)}. JDBC est une \emph{API} pour JAVA permettant d'accéder à une base de donnée. Cette API fournit des méthodes pour se connecter à une base de données et effectuer des requêtes sur cette dernière depuis une application JAVA. L'utilisation de cette \emph{API} conjointement avec le design pattern \textbf{DAO} va se faire par l'intermédiaire d'une classe JAVA \textbf{DatabaseConnection} dont le rôle va être de créer une connexion à une base de donnée et d'implémenter les requêtes standard \textbf{select, update, insert, delete}. Cette classe va donc être une classe parente des implémentations des objets DAO.

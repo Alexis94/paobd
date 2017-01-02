@@ -20,21 +20,21 @@ public class ProfilView {
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3 && n != 4 && n != 5 && n != 6){
+        while (n != 1 && n != 2 && n != 3 && n != 4 && n != 5 && n != 6) {
             n = in.nextInt();
         }
 
-        if (n == 1){
+        if (n == 1) {
             MainFrameController.showListeTitresView();
         } else if (n == 2) {
             MainFrameController.showListeArtistesView();
-        } else if (n == 3){
+        } else if (n == 3) {
             MainFrameController.showListeAlbumsView(user);
-        } else if (n == 4){
+        } else if (n == 4) {
             MainFrameController.showListePlaylistsView();
-        } else if (n == 5){
+        } else if (n == 5) {
             MainFrameController.showRechercherView();
-        } else if (n == 6){
+        } else if (n == 6) {
             MainFrameController.showEcoutesView();
         }
 

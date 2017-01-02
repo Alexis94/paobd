@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.*;
-import java.util.HashMap;
 
 /**
  * Created by Alexis on 13/11/2016.
@@ -35,7 +34,8 @@ public class DatabaseConnection {
     public static void close() throws SQLException {
         try {
             if (conn != null) conn.close();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
     }
 
@@ -45,7 +45,7 @@ public class DatabaseConnection {
         return stmt.executeQuery(sql);
     }
 
-    public static boolean insert(String values, String table) throws  SQLException {
+    public static boolean insert(String values, String table) throws SQLException {
         Statement stmt = conn.createStatement();
         String sql = "INSERT INTO " + table + " VALUES (" + values + ");";
         return stmt.executeUpdate(sql) > 0;

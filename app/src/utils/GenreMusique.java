@@ -1,7 +1,5 @@
 package utils;
 
-import java.util.Scanner;
-
 /**
  * Created by Alexis on 13/11/2016.
  */

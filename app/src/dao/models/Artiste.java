@@ -8,10 +8,10 @@ import java.util.ArrayList;
  * Created by Alexis on 13/11/2016.
  */
 public class Artiste {
-    String nom;
-    String nationalite;
+    private String nom;
+    private String nationalite;
 
-    public Artiste(String nom, String nationalite, ArrayList<Titre> titres, ArrayList<Album> albums) {
+    public Artiste(String nom, String nationalite) {
         this.nom = nom;
         this.nationalite = nationalite;
     }

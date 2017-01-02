@@ -1,10 +1,7 @@
 package utils;
 
-import com.sun.tools.javac.jvm.Gen;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Scanner;
 
 /**
  * Created by Alexis on 28/11/2016.
@@ -12,12 +9,12 @@ import java.util.Scanner;
 public class Utils {
     private static Utils ourInstance = new Utils();
 
-    public static Utils getInstance() {
-        return ourInstance;
-    }
-
     private Utils() {
 
+    }
+
+    public static Utils getInstance() {
+        return ourInstance;
     }
 
     public static String hashPassword(String password) throws NoSuchAlgorithmException {
@@ -34,16 +31,16 @@ public class Utils {
 
         //convert the byte to hex format method 2
         StringBuffer hexString = new StringBuffer();
-        for (int i=0;i<byteData.length;i++) {
-            String hex=Integer.toHexString(0xff & byteData[i]);
-            if(hex.length()==1) hexString.append('0');
+        for (int i = 0; i < byteData.length; i++) {
+            String hex = Integer.toHexString(0xff & byteData[i]);
+            if (hex.length() == 1) hexString.append('0');
             hexString.append(hex);
         }
         return hexString.toString();
     }
 
     public static String formatDuree(int duree) {
-        return duree/60 + ":" + duree%60;
+        return duree / 60 + ":" + duree % 60;
     }
 
 }

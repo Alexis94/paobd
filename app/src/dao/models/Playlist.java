@@ -10,12 +10,12 @@ import static utils.Utils.formatDuree;
  * Created by Alexis on 13/11/2016.
  */
 public class Playlist {
-    int id;
-    String nom;
-    Integer duree;
-    String pseudoUser;
+    private int id;
+    private String nom;
+    private Integer duree;
+    private String pseudoUser;
 
-    public Playlist(int id, String nom, ArrayList<Titre> titres, String pseudoUser) {
+    public Playlist(int id, String nom, String pseudoUser) {
         this.id = id;
         this.nom = nom;
         this.pseudoUser = pseudoUser;
@@ -59,7 +59,7 @@ public class Playlist {
         this.pseudoUser = pseudoUser;
     }
 
-    public ArrayList<Titre> getTitres(){
+    public ArrayList<Titre> getTitres() {
         return new PlaylistImpl().getPlaylistTitres(this.getId());
     }
 

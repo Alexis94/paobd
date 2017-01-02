@@ -2,12 +2,8 @@ package dao.impl;
 
 import dao.ArtisteDAO;
 import dao.DatabaseConnection;
-import dao.models.Album;
 import dao.models.Artiste;
-import dao.models.Titre;
-import utils.GenreMusique;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,16 +13,18 @@ import java.util.ArrayList;
  */
 public class ArtisteImpl implements ArtisteDAO {
     String table = "artiste";
+
+    @Override
     public Artiste getArtiste(String nomArtiste) {
         nomArtiste = nomArtiste.replace("'", "''"); // Handling ' case
         String clauses = "nom='" + nomArtiste + "'";
         try {
             ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
-            if (!rs.isBeforeFirst()){
+            if (!rs.isBeforeFirst()) {
                 return null;
             } else {
                 Artiste tmpArtiste = new Artiste();
-                while (rs.next()){
+                while (rs.next()) {
                     tmpArtiste.setNom(rs.getString("nom"));
                     tmpArtiste.setNationalite(rs.getString("nationalite"));
 
@@ -40,16 +38,17 @@ public class ArtisteImpl implements ArtisteDAO {
         }
     }
 
+    @Override
     public ArrayList<Artiste> getUserArtistes(String pseudo) {
         String clauses = "pseudoUser='" + pseudo + "';";
         Artiste artisteTmp = new Artiste();
         ArrayList<Artiste> artistesUser = new ArrayList<>();
         try {
             ResultSet rs = DatabaseConnection.get("*", "liste_artiste", clauses);
-            if (!rs.isBeforeFirst()){
+            if (!rs.isBeforeFirst()) {
                 return artistesUser;
             } else {
-                while (rs.next()){
+                while (rs.next()) {
                     artistesUser.add(getArtiste(rs.getString("nomArtiste")));
                 }
                 return artistesUser;
@@ -62,16 +61,17 @@ public class ArtisteImpl implements ArtisteDAO {
         }
     }
 
+    @Override
     public ArrayList<Artiste> rechercherArtistes(String substring) {
         substring = substring.replace("'", "''"); // Handling ' case
         String clauses = "strpos(lower(replace(nom, ' ', '')), '" + substring.toLowerCase().replace(" ", "") + "') > 0;";
         ArrayList<Artiste> resultatsRecherche = new ArrayList<>();
         try {
             ResultSet rs = DatabaseConnection.get("*", this.table, clauses);
-            if (!rs.isBeforeFirst()){
+            if (!rs.isBeforeFirst()) {
                 return resultatsRecherche;
             } else {
-                while (rs.next()){
+                while (rs.next()) {
                     resultatsRecherche.add(getArtiste(rs.getString("nom")));
                 }
                 return resultatsRecherche;
@@ -83,6 +83,7 @@ public class ArtisteImpl implements ArtisteDAO {
         }
     }
 
+    @Override
     public boolean artisteExiste(String nomArtiste) {
         String clauses = "nom='" + nomArtiste + "'";
         try {
@@ -94,10 +95,11 @@ public class ArtisteImpl implements ArtisteDAO {
         }
     }
 
+    @Override
     public boolean creerArtiste(String nomArtiste, String nationaliteArtiste) {
         String values = "'" + nomArtiste + "'" + ", '" + nationaliteArtiste + "'";
         try {
-            return DatabaseConnection.insert(values ,"artiste");
+            return DatabaseConnection.insert(values, "artiste");
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -105,16 +107,18 @@ public class ArtisteImpl implements ArtisteDAO {
 
     }
 
+    @Override
     public boolean ajouterArtisteUser(String pseudo, String nomArtiste) {
         String values = "'" + pseudo + "'" + ", '" + nomArtiste + "'";
         try {
-            return DatabaseConnection.insert(values ,"liste_artiste");
+            return DatabaseConnection.insert(values, "liste_artiste");
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
+    @Override
     public boolean retirerArtisteUser(String pseudo, String nomArtiste) {
         nomArtiste = nomArtiste.replace("'", "''");
         String clauses = "pseudoUser='" + pseudo + "' AND nomArtiste='" + nomArtiste + "'";

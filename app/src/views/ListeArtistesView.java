@@ -1,6 +1,5 @@
 package views;
 
-import dao.impl.AlbumImpl;
 import dao.impl.ArtisteImpl;
 import dao.models.Artiste;
 import dao.models.User;
@@ -12,7 +11,7 @@ import java.util.Scanner;
  * Created by Alexis on 03/12/2016.
  */
 public class ListeArtistesView {
-    public ListeArtistesView(Scanner in, User user){
+    public ListeArtistesView(Scanner in, User user) {
         afficherVue(in, user.getArtistes());
         System.out.println("\n1. Voir un artiste");
         System.out.println("2. Ajouter un artiste à la collection");
@@ -21,7 +20,7 @@ public class ListeArtistesView {
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3 && n != 4){
+        while (n != 1 && n != 2 && n != 3 && n != 4) {
             n = in.nextInt();
         }
 
@@ -41,8 +40,8 @@ public class ListeArtistesView {
         } else if (n == 3) {
             System.out.print("Numéro de l'artiste: ");
             int numeroArtiste = in.nextInt();
-            if (new ArtisteImpl().retirerArtisteUser(user.getPseudo(), user.getArtistes().get(numeroArtiste-1).getNom())) {
-                user.retirerArtiste(user.getArtistes().get(numeroArtiste-1));
+            if (new ArtisteImpl().retirerArtisteUser(user.getPseudo(), user.getArtistes().get(numeroArtiste - 1).getNom())) {
+                user.retirerArtiste(user.getArtistes().get(numeroArtiste - 1));
                 MainFrameController.showListeArtistesView();
             } else {
                 System.out.println("Erreur lors de la suppression de l'album de la bibliothèque personnelle");
@@ -60,7 +59,7 @@ public class ListeArtistesView {
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3){
+        while (n != 1 && n != 2 && n != 3) {
             n = in.nextInt();
         }
 

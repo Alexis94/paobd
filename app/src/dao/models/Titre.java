@@ -8,12 +8,12 @@ import static utils.Utils.formatDuree;
  * Created by Alexis on 13/11/2016.
  */
 public class Titre {
-    int id;
-    String nom;
-    int duree;
-    GenreMusique genre;
-    String artiste;
-    String album;
+    private int id;
+    private String nom;
+    private int duree;
+    private GenreMusique genre;
+    private String artiste;
+    private String album;
 
     public Titre(int id, String nom, int duree, GenreMusique genre, String artiste, String album) {
         this.id = id;
@@ -69,11 +69,11 @@ public class Titre {
         this.album = album;
     }
 
-    public void print(){
+    public void print() {
         System.out.println(this.getNom() + " - " + this.getArtiste() + " - " + this.getAlbum() + " - " + this.getGenre() + " - " + formatDuree(this.getDuree()));
     }
 
-    public void printWithId(){
+    public void printWithId() {
         System.out.println(this.getId() + " - " + this.getNom() + " - " + this.getArtiste() + " - " + this.getAlbum() + " - " + this.getGenre() + " - " + formatDuree(this.getDuree()));
     }
 

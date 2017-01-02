@@ -10,5 +10,18 @@ import java.util.ArrayList;
  */
 public interface PlaylistDAO {
     ArrayList<Playlist> getUserPlaylists(String pseudo);
+
     ArrayList<Titre> getPlaylistTitres(int playlistId);
+
+    Playlist getPlaylist(int id);
+
+    boolean creerPlaylist(String nomPlaylist, String pseudoUser);
+
+    boolean supprimerPlaylist(int playlistId);
+
+    int getDernierId();
+
+    boolean ajouterTitre(int playlistId, int titreId);
+
+    boolean retirerTitre(int playlistId, int titreId);
 }

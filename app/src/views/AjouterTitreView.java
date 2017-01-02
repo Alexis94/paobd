@@ -5,7 +5,6 @@ import dao.impl.ArtisteImpl;
 import dao.impl.TitreImpl;
 import dao.models.Playlist;
 import dao.models.Titre;
-import sun.applet.Main;
 import utils.GenreMusique;
 
 import java.util.Scanner;
@@ -22,7 +21,7 @@ public class AjouterTitreView {
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n != 3){
+        while (n != 1 && n != 2 && n != 3) {
             n = in.nextInt();
         }
 
@@ -73,7 +72,7 @@ public class AjouterTitreView {
             int duree = in.nextInt();
             GenreMusique.print();
             int choix = in.nextInt();
-            while (!(choix > 0 && choix <= 8 )) {
+            while (!(choix > 0 && choix <= 8)) {
                 choix = in.nextInt();
             }
             TitreImpl titreImpl = new TitreImpl();

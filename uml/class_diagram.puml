@@ -1,35 +1,47 @@
 @startuml
 class DatabaseConnection {
-    - select(HashTable clauses, HashTable predicates)
-    - update(HashTable clauses, HashTable predicates)
-    - delete(HashTable clauses, HashTable predicates)
-    - insert(HashTable clauses, HashTable predicates)
+    + {static} Connection conn
+    + {static} void connect()
+    + {static} void close()
+    + {static} ResultSet query(String query)
+    + {static} ResultSet get(String values, String table, String clauses)
+    + {static} boolean insert(String values, String table)
+    + {static} boolean delete(String table, String clauses)
+    + {static} boolean update(String table, String values, String clauses)
 }
 
 class Titre {
+    - int id
     - String nom
     - Integer duree
     - GENRE_MUSIQUE genre
-    - Artiste auteur
-    - Album alb
+    - String artiste
+    - String album
+    + Titre(int id, String nom, int duree, GenreMusique genre, String artiste, String album)
+    + Titre()
+    + int getId()
+    + void setId(int id)
     + String getNom()
     + void setNom(String nom)
     + Integer getDuree()
     + void setDuree(Integer duree)
     + Genre getGenre()
-    + void setGenre(genre g
-    + Artiste getArtiste()
-    + void setArtiste(Artiste a)
-    + Album getAlbum()
-    + void setAlbum(Album a)
+    + void setGenre(Genre genre)
+    + String getArtiste()
+    + void setArtiste(String artiste)
+    + String getAlbum()
+    + void setAlbum(String album)
+    + void print()
+    + void printWithId()
 }
 
 class Album {
     - String nom
     - Integer annee
-    - Artiste artiste
-    - Titres[] titres
+    - String artiste
     - Integer duree
+    + Album(String nom)
+    + Album()
     + String getNom()
     + void setNom(String nom)
     + Integer getDuree()
@@ -49,37 +61,38 @@ class Album {
 class Artiste {
     - String nom
     - String nationalite
-    - Titre[] titres
-    - Album[] albums
+    + Artiste(String nom, String nationalite)
+    + Artiste()
     + String getNom()
     + void setNom(String nom)
     + String getNationalite()
-    + void setNationalite(String nom)
+    + void setNationalite(String nationalite)
     + Titre[] getTitres()
     + void ajouterTitre(Titre t)
     + void retirerTitre(Titre t)
-    + Album[] getAlbums()
-    + void ajouterAlbum(Album a)
-    + void retirerAlbum(Album a)
+    + ArrayList<Album> getAlbums()
+    + void print()
 }
 
 class Playlist {
-    - String id
+    - int id
     - String nom
-    - Titres[] titres
     - Integer duree
-    - User user
+    - String pseudoUser
+    + Playlist(int id, String nom, String pseudoUser)
+    + Playlist()
     + String getId()
     + void setId(String id)
     + String getNom()
     + void setNom(String nom)
-    + User getUser()
-    + void setUser(User user)
-    + Titre[] getTitres()
+    + String getPseudoUser()
+    + void setPseudoUser(String pseudoUser)
+    + ArrayList<Titre> getTitres()
     + void ajouterTitre(Titre titre)
     + void retirerTitre(Titre titre)
     + Integer getDuree()
     + void setDuree(Integer duree)
+    + void print()
 }
 
 class User {
@@ -87,11 +100,13 @@ class User {
     - String nom
     - String prenom
     - Integer age
-    - Titre[] titres
-    - Album[] albums
-    - Artiste[] artistes
-    - Playlist[] playlists
-    - Ecoute[] ecoutes
+    - ArrayList<Titre> titres
+    - ArrayList<Album> albums
+    - ArrayList<Artiste> artistes
+    - ArrayList<Playlist> playlists
+    - ArrayList<Ecoute> ecoutes
+    + User(String pseudo, String nom, String prenom, int age, ArrayList<Titre> titres, ArrayList<Album> albums, ArrayList<Artiste> artistes, ArrayList<Playlist> playlists, ArrayList<Ecoute> ecoutes)
+    + User()
     + String getPseudo()
     + void setPseudo(String pseudo)
     + String getNom()
@@ -100,29 +115,33 @@ class User {
     + void setPrenom(String prenom)
     + Integer getAge()
     + void setAge(Integer age)
-    + Titre[] getTitres()
+    + ArrayList<Titre> getTitres()
     + void ajouterTitre(Titre t)
     + void retirerTitre(Titre t)
-    + Artiste[] getArtistes()
+    + ArrayList<Artiste> getArtistes()
     + void ajouterArtiste(Artiste a)
     + void retirerArtiste(Artiste a)
-    + Album[] getAlbums()
+    + ArrayList<Album> getAlbums()
     + void ajouterAlbum(Album a)
     + void retirerAlbum(Album a)
-    + Playlist[] getPlaylists()
+    + ArrayList<Playlist> getPlaylists()
     + void ajouterPlaylist(Playlist p)
     + void retirerPlaylist(Playlist p)
-    + Ecoute[] getEcoutes()
+    + ArrayList<Ecoute> getEcoutes()
     + void ajouterEcoute(Ecoute e)
+
 }
 
 class Ecoute {
-    + Date dateEcoute
-    + Titre Titre
-    + Date getDate()
-    + void setDate(Date d)
+    - String dateEcoute
+    - Titre Titre
+    + Ecoute(String dateEcoute, Titre titre)
+    + Ecoute()
+    + String getDateEcoute()
+    + void setDate(String dateEcoute)
     + Titre getTitre()
     + void setTitre(Titre t)
+    + void print()
 }
 
 interface TitreDAO {
@@ -181,57 +200,59 @@ interface UserDAO {
 
 
 class TitreDAOImpl {
-    + Titre[] getTitresUser(String pseudo)
-    + Titre[] getTitresAlbum(String nomAlbum)
-    + Titre[] getTitresArtiste(String nomArtiste)
-    + Titre[] getTitresPlaylist(String idPlaylist)
-    + Titre ajouterTitre(Titre t)
-    + bool supprimerTitre(String titreId)
+    + ArrayList<Titre> getUserTitres(String pseudo);
+    + ArrayList<Titre> getAlbumTitres(String nomAlbum);
+    + Titre getTitre(String titreId);
+    + ArrayList<Titre> rechercherTitres(String substring);
+    + boolean retirerTitreUser(String pseudo, int titreId);
+    + boolean ajouterTitreUser(String pseudo, String titreId);
+    + boolean creerTitre(String nomTitre, int duree, String nomArtiste, String nomAlbum, String genre);
+    + int getDernierId();
     + Titre editerTitre(Titre t)
 }
 
 class ArtisteDAOImpl {
-    + Artiste ajouterArtiste(Artiste a)
-    + bool supprimerArtiste(String nomArtiste)
-    + Artiste editerArtiste(Artiste a)
-    + Artistes[] getArtistesUser(String pseudo)
+    + Artiste getArtiste(String nomArtiste);
+    +ArrayList<Artiste> getUserArtistes(String pseudo);
+    + ArrayList<Artiste> rechercherArtistes(String substring);
+    + boolean artisteExiste(String nomArtiste);
+    + boolean creerArtiste(String nomArtiste, String nationaliteArtiste);
+    + boolean ajouterArtisteUser(String pseudo, String nomArtiste);
+    + boolean retirerArtisteUser(String pseudo, String nomArtiste);
 }
 
 class AlbumDAOImpl {
-    + Album ajouterAlbum(Album a)
-    + Album editerAlbum(Album a)
-    + Album ajouterTitre(String nomAlbum, String titreId)
-    + Album supprimerTitre(String nomAlbum, String titreId)
-    + bool supprimerAlbum(String nomAlbum)
-    + Album ajouterArtiste(String nomArtiste, String nomAlbum)
-    + Albums[] getAlbumsUser(String pseudo)
+    + ArrayList<Album> getUserAlbums(String pseudo);
+    + Album getAlbum(String nomAlbum);
+    + ArrayList<Album> getArtisteAlbums(String nomArtiste);
+    + ArrayList<Album> rechercherAlbums(String substring);
+    + boolean albumExiste(String nomAlbum);
+    + boolean creerAlbum(String nomAlbum, String nomArtiste, int annee);
+    + boolean ajouterAlbumUser(String pseudo, String nomAlbum);
+    + boolean retirerAlbumUser(String pseudo, String nomAlbum);
 }
 
 class PlaylistDAOImpl {
-    + Playlist ajouterPlaylist(Playlist p)
-    + Playlist supprimerPlaylist(String playlistId)
-    + Playlist editerPlaylist(Playlist p
-    + Playlist ajouterTitre(String titreId, String playlistId)
-    + Playlist retirerTitre(String titreId, String playlistId)
+    + ArrayList<Playlist> getUserPlaylists(String pseudo);
+    + ArrayList<Titre> getPlaylistTitres(int playlistId);
+    + Playlist getPlaylist(int id);
+    + boolean creerPlaylist(String nomPlaylist, String pseudoUser);
+    + boolean supprimerPlaylist(int playlistId);
+    + int getDernierId();
+    + boolean ajouterTitre(int playlistId, int titreId);
+    + boolean retirerTitre(int playlistId, int titreId);
 }
 
 class EcouteDAOImpl {
-    + Ecoute ajouterEcoute(Ecoute e)
-    + bool supprimerEcoute(Ecoute e)
-    + Ecoute editerEcoute(ecoute e)
+    + ArrayList<Ecoute> getUserEcoute(String pseudo);
+    + boolean ajouterEcoute(String pseudo, int titreId);
+    + boolean supprimerEcoute(String pseudo, String dateecoute);
+    + ArrayList<Titre> getUserRecommendations(String pseudo);
 }
 
 class UserDAOImpl {
-    + User ajouterUser(User u)
-    + bool supprimerUser(String pseudo)
-    + User editerUser(User)
-    + User ajouterTitre(String titreId, String userId)
-    + User ajouterAlbum(String nomAlbum, String userId)
-    + User ajouterArtiste(String nomArtiste, String userId)
-    + User supprimerTitre(String titreId, String userId)
-    + User supprimerAlbum(String nomAlbum, String userId)
-    + User supprimerArtiste(String nomArtiste, String userId)
-    + User ajouterPlaylist(String playlistId, String userId)
+    + boolean ajouterUser(User user);
+    + User seConnecter(String pseudo, String password);
 }
 
 class Application {

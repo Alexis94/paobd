@@ -19,18 +19,18 @@ public class RechercherView {
 
         int n = in.nextInt();
 
-        while(n != 1 && n != 2 && n!= 3 && n!=4){
+        while (n != 1 && n != 2 && n != 3 && n != 4) {
             n = in.nextInt();
         }
         if (n != 4) {
             System.out.print("Rechercher: ");
             String recherche = in.nextLine();
             recherche = in.nextLine();
-            if (n == 1){
+            if (n == 1) {
                 MainFrameController.showListeTitresView(new TitreImpl().rechercherTitres(recherche));
-            } else if (n == 2){
+            } else if (n == 2) {
                 MainFrameController.showListeAlbumsView(new AlbumImpl().rechercherAlbums(recherche));
-            } else if (n == 3){
+            } else if (n == 3) {
                 MainFrameController.showListeArtistesView(new ArtisteImpl().rechercherArtistes(recherche));
             }
         } else {
@@ -38,7 +38,6 @@ public class RechercherView {
         }
 
         //TODO Consulter USER?
-
 
 
     }

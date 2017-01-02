@@ -10,16 +10,16 @@ import java.util.ArrayList;
  */
 
 public class User {
-    String pseudo;
-    String nom;
-    String prenom;
-    String password;
-    int age;
-    ArrayList<Titre> titres;
-    ArrayList<Album> albums;
-    ArrayList<Artiste> artistes;
-    ArrayList<Playlist> playlists;
-    ArrayList<Ecoute> ecoutes;
+    private String pseudo;
+    private String nom;
+    private String prenom;
+    private String password;
+    private int age;
+    private ArrayList<Titre> titres;
+    private ArrayList<Album> albums;
+    private ArrayList<Artiste> artistes;
+    private ArrayList<Playlist> playlists;
+    private ArrayList<Ecoute> ecoutes;
 
     public User(String pseudo, String nom, String prenom, int age, ArrayList<Titre> titres, ArrayList<Album> albums, ArrayList<Artiste> artistes, ArrayList<Playlist> playlists, ArrayList<Ecoute> ecoutes) {
         this.pseudo = pseudo;
@@ -32,7 +32,8 @@ public class User {
         this.playlists = playlists;
         this.ecoutes = ecoutes;
     }
-    public User(){
+
+    public User() {
         this.titres = new ArrayList<Titre>();
         this.albums = new ArrayList<Album>();
         this.artistes = new ArrayList<Artiste>();
@@ -44,20 +45,32 @@ public class User {
         return pseudo;
     }
 
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
     public String getNom() {
         return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public String getPrenom() {
         return prenom;
     }
 
-    public String getPassword() {
-        return this.password;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     public int getAge() {
         return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public ArrayList<Titre> getTitres() {
@@ -80,27 +93,6 @@ public class User {
         return new EcouteImpl().getUserEcoute(this.getPseudo());
     }
 
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-
     public void ajouterTitre(Titre titre) {
         this.titres.add(titre);
     }
@@ -113,7 +105,7 @@ public class User {
         this.artistes.add(artiste);
     }
 
-    public void retirerArtiste(Artiste artiste){
+    public void retirerArtiste(Artiste artiste) {
         this.artistes.remove(artiste);
     }
 
@@ -121,7 +113,7 @@ public class User {
         this.albums.add(album);
     }
 
-    public  void retirerAlbum(Album album) {
+    public void retirerAlbum(Album album) {
         this.albums.remove(album);
     }
 
@@ -141,7 +133,7 @@ public class User {
         this.playlists.remove(playlist);
     }
 
-    public void print(){
+    public void print() {
         System.out.println("Pseudo -- Nom -- Prénom -- Age");
         System.out.println(this.pseudo + " -- " + this.nom + " -- " + this.prenom + " -- " + this.age);
     }
