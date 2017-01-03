@@ -86,6 +86,4 @@ public class ListeAlbumsView {
             MainFrameController.showProfil();
         }
     }
-
-    //TODO refactorer en ajoutant méthode pour regrouper deux constructeurs voir pareil pour chaque view (voir listeArtistesView)
 }

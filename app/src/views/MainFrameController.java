@@ -12,31 +12,6 @@ public class MainFrameController {
     static User user;
     static Scanner in;
 
-    /*static JFrame frame;
-
-    public MainFrameController() {
-        frame = new JFrame();
-        frame.setTitle("Librairie Musicale");
-        frame.setSize(400, 500);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
-
-    public static void setView(WelcomeView view) {
-        frame.getContentPane().setVisible(false);
-        frame.setContentPane(view);
-    }
-
-    public static void setView(SeConnecterView view) {
-        frame.getContentPane().setVisible(false);
-        frame.setContentPane(view);
-    }
-
-    public static void setView(CreerCompteView view) {
-        frame.getContentPane().setVisible(false);
-        frame.setContentPane(view);
-    }*/
     public MainFrameController() {
         user = new User();
         in = new Scanner(System.in);  // Reading from System.in

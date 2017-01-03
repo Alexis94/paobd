@@ -145,5 +145,13 @@ public class User {
             this.ajouterTitre(titreImpl.getTitre(titreId));
         }
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
 

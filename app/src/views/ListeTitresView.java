@@ -25,11 +25,10 @@ public class ListeTitresView {
         System.out.println("2. Retirer titre");
         System.out.println("3. Ajouter titre à une playlist");
         System.out.println("4. Ajouter titre à la liste d'écoute");
-        System.out.println("5. Importer titres");
-        System.out.println("6. Retourner au profil");
+        System.out.println("5. Retourner au profil");
         int n = in.nextInt();
 
-        while (n != 1 && n != 2 && n != 3 && n != 4 && n != 5 && n != 6) {
+        while (n != 1 && n != 2 && n != 3 && n != 4 && n != 5) {
             n = in.nextInt();
         }
 
@@ -63,8 +62,6 @@ public class ListeTitresView {
             int titreId = in.nextInt();
             new EcouteImpl().ajouterEcoute(user.getPseudo(), user.getTitres().get(titreId - 1).getId());
             MainFrameController.showEcoutesView();
-        } else if (n == 5) {
-            //TODO JFileChooser
         } else {
             MainFrameController.showProfil();
         }
@@ -77,8 +74,6 @@ public class ListeTitresView {
         for (Titre titre : titres) {
             titre.printWithId();
         }
-        //TODO Ajouter Titre directement collection
-        //TODO Ajouter Titre à une playlist
         System.out.println("\n1. Ajouter titre à la collection");
         System.out.println("2. Ajouter titre à une Playlist");
         System.out.println("3. Ajouter titre à la liste d'écoute");
@@ -120,7 +115,6 @@ public class ListeTitresView {
         } else {
             MainFrameController.showProfil();
         }
-
 
     }
 }

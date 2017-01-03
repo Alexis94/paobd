@@ -1,0 +1,1 @@
+CREATE VIEW ArtisteVue as select nomArtiste, count(distinct(nomAlbum)) as nbAlbums, count(distinct(nomTitre)) as nbTitres from (select art.nom as nomArtiste, alb.nom as nomAlbum, tit.nom as nomTitre from artiste art inner join album alb on alb.nomartiste = art.nom inner join titre tit on tit.nomAlbum=alb.nom) v group by v.nomArtiste;

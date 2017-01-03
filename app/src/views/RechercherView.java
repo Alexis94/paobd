@@ -37,8 +37,5 @@ public class RechercherView {
             MainFrameController.showProfil();
         }
 
-        //TODO Consulter USER?
-
-
     }
 }

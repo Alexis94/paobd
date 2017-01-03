@@ -44,9 +44,5 @@ public class PlaylistView {
             MainFrameController.showProfil();
         }
 
-
-        //TODO Ajouter titre à Playlist
-        //TODO Retirer titre à Playlist
-
     }
 }

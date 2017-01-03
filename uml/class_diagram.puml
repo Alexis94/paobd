@@ -100,6 +100,7 @@ class User {
     - String nom
     - String prenom
     - Integer age
+    - String password
     - ArrayList<Titre> titres
     - ArrayList<Album> albums
     - ArrayList<Artiste> artistes
@@ -129,7 +130,8 @@ class User {
     + void retirerPlaylist(Playlist p)
     + ArrayList<Ecoute> getEcoutes()
     + void ajouterEcoute(Ecoute e)
-
+    + void setPassword(String password)
+    + String getPassword()
 }
 
 class Ecoute {
@@ -294,12 +296,12 @@ DatabaseConnection <-- UserDAOImpl : extends
 
 
 
-TitreDAO <-- Application : uses
-ArtisteDAO <-- Application : uses
-AlbumDAO <-- Application : uses
-PlaylistDAO <-- Application : uses
-EcouteDAO <-- Application : uses
-UserDAO <-- Application : uses
+TitreDAOImpl <-- Application : uses
+ArtisteDAOImpl <-- Application : uses
+AlbumDAOImpl <-- Application : uses
+PlaylistDAOImpl <-- Application : uses
+EcouteDAOImpl <-- Application : uses
+UserDAOImpl <-- Application : uses
 
 
 

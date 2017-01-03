@@ -1,0 +1,12 @@
+@startuml
+
+package dao
+package utils
+
+package views {
+}
+
+class Main {
+
+}
+@enduml
