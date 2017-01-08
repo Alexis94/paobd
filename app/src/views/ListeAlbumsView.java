@@ -1,6 +1,7 @@
 package views;
 
 import dao.impl.AlbumImpl;
+import dao.impl.ArtisteImpl;
 import dao.models.Album;
 import dao.models.User;
 
@@ -37,6 +38,22 @@ public class ListeAlbumsView {
             System.out.print("Nom de l'album: ");
             String nomAlbum = in.nextLine();
             nomAlbum = in.nextLine();
+            if (!new AlbumImpl().albumExiste(nomAlbum)) {
+                System.out.print("Nom artiste: ");
+                String nomArtiste = in.nextLine();
+                if (!new ArtisteImpl().artisteExiste(nomArtiste)) {
+                    System.out.print("Nationalite de l'artiste: ");
+                    String nationalite = in.nextLine();
+                    if (!new ArtisteImpl().creerArtiste(nomArtiste, nationalite)) {
+                        System.out.println("Echec lors de la création de l'artiste");
+                    }
+                }
+                System.out.print("Annee de l'album: ");
+                int annee = in.nextInt();
+                if (!new AlbumImpl().creerAlbum(nomAlbum, nomArtiste, annee)) {
+                    System.out.println("Echec lors de la création de l'album");
+                }
+            }
             if (new AlbumImpl().ajouterAlbumUser(MainFrameController.user.getPseudo(), nomAlbum)) {
                 MainFrameController.user.ajouterAlbum(new AlbumImpl().getAlbum(nomAlbum));
                 MainFrameController.showListeAlbumsView(MainFrameController.user);
@@ -78,6 +95,22 @@ public class ListeAlbumsView {
             System.out.print("Nom de l'album: ");
             String nomAlbum = in.nextLine();
             nomAlbum = in.nextLine();
+            if (!new AlbumImpl().albumExiste(nomAlbum)) {
+                System.out.print("Nom artiste: ");
+                String nomArtiste = in.nextLine();
+                if (!new ArtisteImpl().artisteExiste(nomArtiste)) {
+                    System.out.print("Nationalite de l'artiste: ");
+                    String nationalite = in.nextLine();
+                    if (!new ArtisteImpl().creerArtiste(nomArtiste, nationalite)) {
+                        System.out.println("Echec lors de la création de l'artiste");
+                    }
+                }
+                System.out.print("Annee de l'album: ");
+                int annee = in.nextInt();
+                if (!new AlbumImpl().creerAlbum(nomAlbum, nomArtiste, annee)) {
+                    System.out.println("Echec lors de la création de l'album");
+                }
+            }
             if (new AlbumImpl().ajouterAlbumUser(MainFrameController.user.getPseudo(), nomAlbum)) {
                 MainFrameController.user.ajouterAlbum(new AlbumImpl().getAlbum(nomAlbum));
                 MainFrameController.showListeAlbumsView(MainFrameController.user);

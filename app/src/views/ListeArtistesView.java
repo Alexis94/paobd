@@ -33,9 +33,19 @@ public class ListeArtistesView {
             System.out.print("Nom de l'artiste: ");
             String nomArtiste = in.nextLine();
             nomArtiste = in.nextLine();
+            if (!new ArtisteImpl().artisteExiste(nomArtiste)) {
+                System.out.print("Nationalité: ");
+                String nationalite = in.nextLine();
+                if (!new ArtisteImpl().creerArtiste(nomArtiste, nationalite)) {
+                    System.out.println("Echec lors de la création de l'artiste, veuillez réessayer");
+                    MainFrameController.showListePlaylistsView();
+                }
+            }
             if (new ArtisteImpl().ajouterArtisteUser(MainFrameController.user.getPseudo(), nomArtiste)) {
                 MainFrameController.user.ajouterArtiste(new ArtisteImpl().getArtiste(nomArtiste));
                 MainFrameController.showListeArtistesView();
+            } else {
+                System.out.println("Echec lors de l'ajout d'artiste à votre bibliothèque personnelle");
             }
         } else if (n == 3) {
             System.out.print("Numéro de l'artiste: ");
@@ -75,6 +85,8 @@ public class ListeArtistesView {
             if (new ArtisteImpl().ajouterArtisteUser(MainFrameController.user.getPseudo(), nomArtiste)) {
                 MainFrameController.user.ajouterArtiste(new ArtisteImpl().getArtiste(nomArtiste));
                 MainFrameController.showListeArtistesView();
+            } else {
+
             }
         } else {
             MainFrameController.showProfil();

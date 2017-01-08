@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41993d40-1ed8-4c18-a601-a53d006769bf" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/uml/app.puml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rapport/images/class_diagram.png" afterPath="$PROJECT_DIR$/rapport/images/class_diagram.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/uml/class_diagram.png" afterPath="$PROJECT_DIR$/uml/class_diagram.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/dao/models/User.java" afterPath="$PROJECT_DIR$/app/src/dao/models/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/views/ListeAlbumsView.java" afterPath="$PROJECT_DIR$/app/src/views/ListeAlbumsView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/views/ListeTitresView.java" afterPath="$PROJECT_DIR$/app/src/views/ListeTitresView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/views/MainFrameController.java" afterPath="$PROJECT_DIR$/app/src/views/MainFrameController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/views/PlaylistView.java" afterPath="$PROJECT_DIR$/app/src/views/PlaylistView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/views/RechercherView.java" afterPath="$PROJECT_DIR$/app/src/views/RechercherView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rapport/rapport.tex" afterPath="$PROJECT_DIR$/rapport/rapport.tex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/uml/class_diagram.puml" afterPath="$PROJECT_DIR$/uml/class_diagram.puml" />
     </list>
     <ignored path="projet.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,7 +26,7 @@
       <file leaf-file-name="EcouteDAO.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/dao/EcouteDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2519084">
+            <state vertical-scroll-proportion="0.25267994">
               <caret line="14" column="0" selection-start-line="11" selection-start-column="4" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
@@ -1026,7 +1015,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/dao/EcouteDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2519084">
+        <state vertical-scroll-proportion="0.25267994">
           <caret line="14" column="0" selection-start-line="11" selection-start-column="4" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>

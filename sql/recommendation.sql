@@ -1,5 +1,1 @@
-(select genre, nomartiste from titre inner join (select titreId as id from ecoute where pseudouser='alexis') as titresecoutes on titre.id = titresecoutes.id) /* Genre nomArtiste */
-
-select * from titre where id not in (select titreid as id from ecoute where pseudouser='alexis');
-
-select * from (select * from titre where id not in (select titreid as id from ecoute where pseudouser='alexis')) as titre inner join (select genre, nomartiste from titre inner join (select titreId as id from ecoute where pseudouser='alexis') as titresecoutes on titre.id = titresecoutes.id) as res on titre.genre=res.genre OR titre.nomartiste=res.nomartiste ORDER BY RANDOM() limit 10;
+select * from (select id, nomArtiste, nomtitre, nomAlbum, genre, duree from album inner join (select id, nom as nomTitre, nomAlbum, genre, duree from titre where id not in (select titreid as id from ecoute where pseudouser='alexis')) as t on t.nomAlbum=album.nom) as titre inner join (select genre, nomArtiste from album inner join (select genre, nomAlbum from titre inner join (select titreId from Ecoute where pseudoUser='alexis') as titresecoutes on titre.id=titresecoutes.titreid) as restitres on restitres.nomAlbum=album.nom) as res on titre.genre=res.genre OR titre.nomartiste=res.nomartiste ORDER BY RANDOM() limit 10;

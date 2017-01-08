@@ -71,7 +71,6 @@ public class TitreImpl implements TitreDAO {
                     tmpTitre.setId(rs.getInt("id"));
                     tmpTitre.setNom(rs.getString("nom"));
                     tmpTitre.setAlbum(rs.getString("nomAlbum"));
-                    tmpTitre.setArtiste(new AlbumImpl().getAlbum(tmpTitre.getAlbum()).getArtiste());
                     tmpTitre.setDuree(rs.getInt("duree"));
                     tmpTitre.setGenre(GenreMusique.valueOf(rs.getString("genre").toUpperCase()));
                 }
@@ -130,7 +129,7 @@ public class TitreImpl implements TitreDAO {
 
     @Override
     public boolean creerTitre(String nomTitre, int duree, String nomArtiste, String nomAlbum, String genre) {
-        String values = "DEFAULT, '" + nomTitre + "'" + ", " + duree + ", '" + nomArtiste + "', '" + nomAlbum + "', '" + genre.toLowerCase() + "'";
+        String values = "DEFAULT, '" + nomTitre + "'" + ", " + duree + ", '" + nomAlbum + "', '" + genre.toLowerCase() + "'";
         try {
             return DatabaseConnection.insert(values, this.table);
         } catch (SQLException e) {

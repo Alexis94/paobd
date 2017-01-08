@@ -65,7 +65,7 @@ public class EcouteImpl implements EcouteDAO {
 
     @Override
     public ArrayList<Titre> getUserRecommendations(String pseudo) {
-        String requete = "select * from (select * from titre where id not in (select titreid as id from ecoute where pseudouser='" + pseudo + "')) as titre inner join (select genre, nomartiste from titre inner join (select titreId as id from ecoute where pseudouser='" + pseudo + "') as titresecoutes on titre.id = titresecoutes.id) as res on titre.genre=res.genre OR titre.nomartiste=res.nomartiste ORDER BY RANDOM() limit 10;";
+        String requete = "select * from (select id, nomArtiste, nomtitre, nomAlbum, genre, duree from album inner join (select id, nom as nomTitre, nomAlbum, genre, duree from titre where id not in (select titreid as id from ecoute where pseudouser='" + pseudo + "')) as t on t.nomAlbum=album.nom) as titre inner join (select genre, nomArtiste from album inner join (select genre, nomAlbum from titre inner join (select titreId from Ecoute where pseudoUser='" + pseudo + "') as titresecoutes on titre.id=titresecoutes.titreid) as restitres on restitres.nomAlbum=album.nom) as res on titre.genre=res.genre OR titre.nomartiste=res.nomartiste ORDER BY RANDOM() limit 10;";
         ArrayList<Titre> recommendationTitres = new ArrayList<>();
         try {
             ResultSet rs = DatabaseConnection.query(requete);
@@ -75,9 +75,9 @@ public class EcouteImpl implements EcouteDAO {
                 while (rs.next()) {
                     Titre tmpTitre = new Titre();
                     tmpTitre.setId(rs.getInt("id"));
-                    tmpTitre.setNom(rs.getString("nom"));
+                    tmpTitre.setNom(rs.getString("nomtitre"));
+                    tmpTitre.setArtiste(rs.getString("nomartiste"));
                     tmpTitre.setAlbum(rs.getString("nomAlbum"));
-                    tmpTitre.setArtiste(rs.getString("nomArtiste"));
                     tmpTitre.setDuree(rs.getInt("duree"));
                     tmpTitre.setGenre(GenreMusique.valueOf(rs.getString("genre").toUpperCase()));
                     recommendationTitres.add(tmpTitre);

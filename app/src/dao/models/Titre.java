@@ -1,5 +1,6 @@
 package dao.models;
 
+import dao.impl.AlbumImpl;
 import utils.GenreMusique;
 
 import static utils.Utils.formatDuree;
@@ -54,7 +55,7 @@ public class Titre {
     }
 
     public String getArtiste() {
-        return artiste;
+        return new AlbumImpl().getAlbum(this.getAlbum()).getArtiste();
     }
 
     public void setArtiste(String artiste) {

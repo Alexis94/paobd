@@ -14,7 +14,6 @@ import java.util.Scanner;
  */
 public class ListeTitresView {
     public ListeTitresView(Scanner in, User user) {
-        //TODO Sort titres
         int i = 0;
         for (Titre titre : user.getTitres()) {
             System.out.print(++i + ".");
@@ -54,7 +53,7 @@ public class ListeTitresView {
             }
             System.out.print("Numéro de la playlist: ");
             int numeroPlaylist = in.nextInt();
-            user.getPlaylists().get(numeroPlaylist - 1).ajouterTitre(new TitreImpl().getTitre(String.valueOf(titreId)));
+            user.getPlaylists().get(numeroPlaylist - 1).ajouterTitre(new TitreImpl().getTitre(String.valueOf(user.getTitres().get(titreId - 1).getId())));
             MainFrameController.showPlaylistView(user.getPlaylists().get(numeroPlaylist - 1));
 
         } else if (n == 4) {
@@ -88,11 +87,11 @@ public class ListeTitresView {
         if (n == 1) {
             System.out.print("ID du titre: ");
             int titreId = in.nextInt();
-            if (new TitreImpl().retirerTitreUser(user.getPseudo(), user.getTitres().get(titreId - 1).getId())) {
-                user.retirerTitre(user.getTitres().get(titreId - 1));
+            if (new TitreImpl().ajouterTitreUser(user.getPseudo(), String.valueOf(titreId))) {
+                user.ajouterTitre(new TitreImpl().getTitre(String.valueOf(titreId)));
                 MainFrameController.showListeTitresView();
             } else {
-                System.out.println("Erreur lors de la suppression du titre de la bibliothèque personnelle");
+                System.out.println("Erreur lors de l'ajout");
             }
         } else if (n == 2) {
             System.out.print("ID du titre: ");

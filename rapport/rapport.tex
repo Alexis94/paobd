@@ -71,8 +71,10 @@ Nous voulons donc créer une application permettant à l'utilisateur d'enregistr
 \chapter{Modèle entité-attribut et relationnel}
 \section{Modélisation entité-attribut}
   \includegraphics[scale=0.5]{ea-final.png}
+  L'explication des relations du diagramme ci-dessus est faite dans les sous-parties suivantes.
 \section{Modélisation de la vue}
   \includegraphics[scale=0.7]{vues.png}
+  L'explication des relations de la vue ci-dessus est faite dans les sous parties suivantes.
 \section{Du modèle entité-attribut vers le modèle relationnel}
   \subsection{Tables, clés primaires et cardinalité}
     \begin{itemize}
@@ -291,15 +293,12 @@ r la valeur de \textbf{id}
         Le principe est simple, avant de supprimer une entrée dans la table \textbf{Playlist}, on s'assure que toutes les entrées de la table \textbf{Playlist\_Titre} ayant pour clé étrangère \emph{l'id} de l'entrée supprimée dans \textbf{Playlist} soient supprimées préalablement.
     \end{itemize}
 \subsection{Importation de données}
-Afin de pouvoir utiliser l'application tout de suite, on décide d'importer des données via un format csv à l'aide de la fonction \textbf{COPY}.
+Afin d'ajouter facilement des données à la base de données, on décide d'importer des données via un fichier au format \textbf{csv} à l'aide de la fonction \textbf{COPY}.
 	\begin{lstlisting}[language=SQL, label=data-coy,caption=Copie des données, breaklines, frame=single]{copy.sql}
-	SELECT raiseNotice('Copy Data from artistes.csv...');
 	COPY ARTISTE FROM 'artistes.csv' DELIMITER ',' CSV;
 	
-	SELECT raiseNotice('Copy Data from albums.csv...');
 	COPY ALBUM FROM 'albums.csv' DELIMITER ',' CSV;
 	
-	SELECT raiseNotice('Copy Data from titres.csv...');
 	COPY TITRE (nom, duree, nomAlbum, genre) FROM 'titres.csv' DELIMITER ',' CSV;
 	
      \end{lstlisting}
